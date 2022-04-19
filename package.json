@@ -1,0 +1,25 @@
+{
+  "name": "moda-test",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "build2": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.13"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.25",
+    "@vitejs/plugin-vue": "^2.3.1",
+    "sass": "^1.50.0",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.2",
+    "vue-tsc": "^0.29.8"
+  }
+}
