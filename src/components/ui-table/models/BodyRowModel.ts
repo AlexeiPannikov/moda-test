@@ -1,10 +1,8 @@
-import { BodyItemModel } from "./BodyItemModel"
-
 export class BodyRowModel {
 
     id: number = 0;
 
-    items: BodyItemModel[] = new Array<BodyItemModel>();
+    item: any
 
     isActive: boolean = false;
 

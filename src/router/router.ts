@@ -13,6 +13,11 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: "/production",
+                component: ProductionPage,
+                redirect: '/production/in-progress'
+            },
+            {
+                path: "/production/:type",
                 name: "production",
                 component: ProductionPage
             },

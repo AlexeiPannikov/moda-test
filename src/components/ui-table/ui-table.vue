@@ -1,7 +1,6 @@
+import { toRefs } from 'vue';
 <template>
-
   <div class="table">
-
     <!-- TABLE HEADER  -->
     <div class="table-header">
       <slot name="header"></slot>
@@ -9,37 +8,45 @@
 
     <!-- TABLE  BODY  -->
     <transition-group name="list" mode="in-out">
-      <div class="body-row" :class="{ active: row.isActive }" @click="clickRowHandler(row)"
-        v-for="row in props.tableModel.bodyRows" :key="row.id">
-        <slot v-for="item in row.items" :key="item.id" name="item" :item="item" />
+      <div
+        class="body-row"
+        :class="{ active: row.isActive }"
+        @click="clickRowHandler(row)"
+        v-for="row in props.tableModel.bodyRows"
+        :key="row.id"
+      >
+        <slot name="item" :item="row.item" />
       </div>
     </transition-group>
   </div>
-
 </template>
 
-<script lang="ts">import { BodyRowModel } from './models/BodyRowModel';
-import { TableModel } from './models/TableModel';
+<script lang="ts">
+import { BodyRowModel } from "./models/BodyRowModel";
+import { TableModel } from "./models/TableModel";
 
 export default {
-  name: "custom-table"
-}
+  name: "custom-table",
+};
 </script>
 
 <script lang="ts" setup>
-
 interface Props {
-  tableModel: TableModel
+  tableModel: TableModel;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  tableModel: () => new TableModel()
-})
+  tableModel: () => new TableModel(),
+});
+
+const emit = defineEmits<{
+  (e: "onRowClick", data: any): void;
+}>();
 
 const clickRowHandler = (row: BodyRowModel) => {
-  props.tableModel.setActiveRow(row.id)
-}
-
+  props.tableModel.setActiveRow(row.id);
+  emit('onRowClick',row.item)
+};
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +91,7 @@ const clickRowHandler = (row: BodyRowModel) => {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 2px;
-    border-bottom: 1px solid rgba(0, 0, 0, .05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     padding: 10px 5px 10px 10px;
     width: 100%;
     background-color: transparent;
@@ -97,7 +104,7 @@ const clickRowHandler = (row: BodyRowModel) => {
     }
 
     &::after {
-      content: '';
+      content: "";
       display: block;
       z-index: -5;
       transition: background-color 0.15s linear;
@@ -107,7 +114,7 @@ const clickRowHandler = (row: BodyRowModel) => {
   .active {
     background-color: var(--main-color);
 
-    &:deep()>div {
+    &:deep() > div {
       color: #fff;
     }
 
@@ -116,7 +123,7 @@ const clickRowHandler = (row: BodyRowModel) => {
     }
 
     &::after {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       z-index: 1;
