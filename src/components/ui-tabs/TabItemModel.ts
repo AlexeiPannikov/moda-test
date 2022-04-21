@@ -6,6 +6,8 @@ export class TabItemModel<T> {
 
     value: T = null;
 
+    path: string;
+
     isActive: boolean = false;
 
     constructor(obj?: Partial<TabItemModel<T>>) {

@@ -13,7 +13,7 @@ import { toRefs } from 'vue';
         :class="{ active: row.isActive }"
         @click="clickRowHandler(row)"
         v-for="row in props.tableModel.bodyRows"
-        :key="row.id"
+        :key="row.item.id"
       >
         <slot name="item" :item="row.item" />
       </div>
@@ -44,7 +44,7 @@ const emit = defineEmits<{
 }>();
 
 const clickRowHandler = (row: BodyRowModel) => {
-  props.tableModel.setActiveRow(row.id);
+  props.tableModel.setActiveRow(row.item.id);
   emit('onRowClick',row.item)
 };
 </script>

@@ -29,7 +29,9 @@
       </section>
 
       <!-- product detail -->
-      <section class="product-section"></section>
+      <section class="product-section">
+        <product-card :product="product"></product-card>
+      </section>
     </div>
   </page-template>
 </template>
@@ -46,57 +48,46 @@ import { reactive } from "@vue/reactivity";
 import { TabItemModel } from "@/components/ui-tabs/TabItemModel";
 import { TableModel } from "@/components/ui-table/models/TableModel";
 import { BodyRowModel } from "@/components/ui-table/models/BodyRowModel";
-import { BodyItemModel } from "@/components/ui-table/models/BodyItemModel";
-import router from "@/router/router";
+import { useRoute, useRouter } from "vue-router";
+import { onMounted, onUpdated } from "vue";
+import ProductCard from "./components/product-card/product-card.vue";
+import { ProductModel } from "./components/product-card/ProductModel";
+
+const route = useRoute()
+const router = useRouter()
 
 const tabs = reactive(
   new TabsModel({
     tabList: [
-      new TabItemModel({ id: 1, name: "IN PROGRESS", isActive: true }),
-      new TabItemModel({ id: 2, name: "TO DO" }),
-      new TabItemModel({ id: 3, name: "REJECTED" }),
+      new TabItemModel({ id: 1, name: "IN PROGRESS", path: 'in-progress' }),
+      new TabItemModel({ id: 2, name: "TO DO", path: 'to-do' }),
+      new TabItemModel({ id: 3, name: "REJECTED", path: 'rejected' }),
     ],
   })
 );
-
-const tabClickHandler = (value: TabItemModel<any>) => {
-  tabs.setActiveTab(value.id);
-  const go = (paramName: string) => {
-    router.push({ name: "production", params: { type: paramName } });
-  };
-  if (value.id === 1) {
-    go("in-progress");
-  }
-  if (value.id === 2) {
-    go("to-do");
-  }
-  if (value.id === 3) {
-    go("rejected");
-  }
-};
 
 const table = reactive(
   new TableModel({
     bodyRows: [
       new BodyRowModel({
-        id: 1,
         item: {
+          id: 1,
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
         },
       }),
       new BodyRowModel({
-        id: 2,
         item: {
+          id: 2,
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
         },
       }),
       new BodyRowModel({
-        id: 3,
         item: {
+          id: 3,
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
@@ -106,8 +97,33 @@ const table = reactive(
   })
 );
 
+const product = reactive(new ProductModel({
+  code: 'B08MY774GF',
+  jobCode: 'Kelvin testing',
+  productName: 'PUMA Boys Placed Logo Boxer Baby and Toddler Underwear Set, red Combo, 152',
+  productionType: 'Pin',
+  styleGuide: 'Men - Woman Oversize MULTIPACKS PIN'
+}))
+
+const initState = () => {
+  tabs.setActiveTabByPath(route.params.type as string)
+  table.setActiveRow(Number(route.query.id))
+}
+
+onMounted(() => {
+  initState()
+})
+
+onUpdated(() => {
+  initState()
+})
+
+const tabClickHandler = (tab: TabItemModel<any>) => {
+  router.push({ name: 'production', params: { type: tab.path } })
+}
+
 const rowClickHandler = (data: any) => {
-  console.log(data);
+  router.push({ name: 'production', query: { ...route.query, id: data.id } })
 };
 </script>
 
@@ -115,12 +131,19 @@ const rowClickHandler = (data: any) => {
 .production-page-content {
   display: flex;
 
+  .table-section,
+  .product-section {
+    box-shadow: var(--shadow);
+  }
+
   .table-section {
     flex: 1 1 45%;
+    margin-right: 15px;
   }
 
   .product-section {
     flex: 1 1 55%;
+    background-color: white;
   }
 }
 </style>

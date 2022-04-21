@@ -1,7 +1,5 @@
 export class BodyRowModel {
 
-    id: number = 0;
-
     item: any
 
     isActive: boolean = false;
