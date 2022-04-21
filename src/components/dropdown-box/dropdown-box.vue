@@ -60,5 +60,6 @@ onUpdated(() => {
     background-color: var(--dropdown-background-color);
     padding: 10px 0;
     position: absolute;
+    z-index: 100;
 }
 </style>

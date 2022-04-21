@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Layout from "../layouts/layout.vue"
-import ProductionPage from "../pages/production-page.vue"
-import JobsPage from "../pages/jobs-page.vue"
-import ErrorPage from "../pages/error-page.vue"
+import Layout from "@layouts/layout.vue"
+import ProductionPage from "@pages/production-page/production-page.vue"
+import ErrorPage from "@pages/error-page.vue"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -13,6 +12,11 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: "/production",
+                component: ProductionPage,
+                redirect: '/production/in-progress'
+            },
+            {
+                path: "/production/:type",
                 name: "production",
                 component: ProductionPage
             },
