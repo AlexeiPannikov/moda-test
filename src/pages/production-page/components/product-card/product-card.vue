@@ -56,21 +56,18 @@ const tabs = reactive(
             new TabItemModel({ id: 1, name: "Overview" }),
             new TabItemModel({ id: 2, name: "Styling" }),
             new TabItemModel({ id: 3, name: "Samples" }),
-            new TabItemModel({ id: 3, name: "Assets" }),
+            new TabItemModel({ id: 4, name: "Assets" }),
         ],
     })
 );
 
 const tabClickHandler = (tab: TabItemModel<any>) => {
-    tabs.tabPushRouter(router, route.name.toString(), tab, { name: "prod", payload: tab.name })
+    router.push({ name: 'production', query: { ...route.query, prod: tab.name } })
+    tabs.setActiveTabById(tab.id)
 }
 
 onMounted(() => {
-    tabs.setActiveTabByQuery('name', route.params.prod as string)
-})
-
-onUpdated(() => {
-    tabs.setActiveTabByQuery('name', route.params.prod as string)
+    tabs.setActiveTabByQuery('name', route.query.prod as string)
 })
 
 // const emit = defineEmits<{

@@ -36,14 +36,26 @@ const onClick = () => {
 }
 
 .active {
-
     &::after {
+        content: '';
+        display: block;
         position: absolute;
         width: 100%;
         height: 4px;
         bottom: 0;
         left: 0;
         background-color: var(--main-color);
+        // animation: slide 1s linear forwards;
     }
 }
+
+// @keyframes slide {
+//     from {
+//         transform: translateX(-100px);
+//     }
+
+//     to {
+//         transform: translateX(0);
+//     }
+// }
 </style>
