@@ -62,7 +62,7 @@ const tabs = reactive(
 );
 
 const tabClickHandler = (tab: TabItemModel<any>) => {
-    router.push({ name: 'production', query: { ...route.query, prod: tab.name } })
+    router.push({ name: route.name, query: { ...route.query, prod: tab.name } })
     tabs.setActiveTabById(tab.id)
 }
 
