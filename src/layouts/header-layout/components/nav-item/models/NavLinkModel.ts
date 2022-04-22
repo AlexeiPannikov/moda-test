@@ -4,6 +4,8 @@ export class NavLinkModel {
 
     Name: string = "";
 
+    Path: string = "";
+
     PathName: string = "";
 
     constructor(obj?: Partial<NavLinkModel>) {

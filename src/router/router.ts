@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "/production",
                 component: ProductionPage,
-                redirect: '/production/in-progress'
+                redirect: { name: 'production', params: { type: 'in-progress' } }
             },
             {
                 path: "/production/:type",

@@ -68,7 +68,7 @@ const getColor = computed(() => {
 
 const clickHandler = (e: Event) => {
     if (IsNavItem()) {
-        router.push({ name: (item as NavLinkModel).PathName })
+        router.push({ path: (item as NavLinkModel).Path })
         return
     }
     isOpenDropdown.value = !isOpenDropdown.value

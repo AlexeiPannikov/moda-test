@@ -53,7 +53,7 @@ const router = useRouter()
 const tabs = reactive(
     new TabsModel({
         tabList: [
-            new TabItemModel({ id: 1, name: "Overview" }),
+            new TabItemModel({ id: 1, name: "Overview", isActive: true }),
             new TabItemModel({ id: 2, name: "Styling" }),
             new TabItemModel({ id: 3, name: "Samples" }),
             new TabItemModel({ id: 4, name: "Assets" }),
@@ -67,7 +67,9 @@ const tabClickHandler = (tab: TabItemModel<any>) => {
 }
 
 onMounted(() => {
-    tabs.setActiveTabByQuery('name', route.query.prod as string)
+    if (route.query.prod) {
+        tabs.setActiveTabByQuery('name', route.query.prod as string)
+    }
 })
 
 // const emit = defineEmits<{
