@@ -23,7 +23,10 @@
 
         </header>
 
-
+        <!-- Card body -->
+        <main class="card-body">
+            <component :is="getComponent" />
+        </main>
     </div>
 </template>
 
@@ -31,12 +34,12 @@
 import { ProductModel } from './ProductModel';
 import UiTabs from '@components/ui-tabs/ui-tabs.vue'
 import TabItemSlider from '@components/ui-tabs/tab-item-slider.vue'
-import { reactive } from '@vue/reactivity';
+import { computed, reactive } from '@vue/reactivity';
 import { TabItemModel } from '@/components/ui-tabs/TabItemModel';
 import { TabsModel } from '@/components/ui-tabs/TabsModel';
 import { useRoute, useRouter } from 'vue-router';
-import productionPageVue from '../../production-page.vue';
-import { onMounted, onUpdated } from 'vue';
+import { onMounted } from 'vue';
+import Overview from "./components/overview.vue"
 
 
 interface IProps {
@@ -71,6 +74,13 @@ onMounted(() => {
         tabs.setActiveTabByQuery('name', route.query.prod as string)
     }
 })
+
+const getComponent = computed(() => {
+    switch(tabs.activeTab.name) {
+        case "Overview":
+            return Overview
+    }
+}) 
 
 // const emit = defineEmits<{
 

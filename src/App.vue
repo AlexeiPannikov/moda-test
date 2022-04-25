@@ -8,6 +8,7 @@
 
 <style lang="scss">
 @import "./assets/styles/normalize.css";
+@import "./assets/styles/reset.css";
 @import "./assets/styles/variables.css";
 @import "./assets/fonts/roboto.css";
 
@@ -15,6 +16,16 @@
   box-sizing: border-box;
   font-family: 'Roboto', 'sans-serif';
   letter-spacing: 1px;
+}
+
+.button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
 body {
@@ -27,7 +38,6 @@ html,
 body,
 #app {
   height: 100%;
-  min-height: 100%;
 }
 
 a,

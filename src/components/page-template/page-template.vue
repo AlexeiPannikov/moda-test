@@ -14,6 +14,9 @@
 <style lang="scss" scoped>
 .page-template {
     padding: 40px 50px 20px 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .toolbar {
         margin-bottom: 22px;

@@ -4,6 +4,10 @@ export class TabsModel<T> {
 
     tabList: TabItemModel<T>[] = new Array<TabItemModel<T>>();
 
+    get activeTab(): TabItemModel<T> {
+        return this.tabList.find(item => item.isActive)
+    }
+
     setActiveTabById(id: number) {
         this.tabList.forEach(tab => {
             tab.isActive = tab.id === id

@@ -71,7 +71,7 @@ const table = reactive(
     bodyRows: [
       new BodyRowModel({
         item: {
-          id: 1,
+          id: 'B08MY774GF',
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
@@ -79,7 +79,7 @@ const table = reactive(
       }),
       new BodyRowModel({
         item: {
-          id: 2,
+          id: 'ECYF689TGT',
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
@@ -87,7 +87,7 @@ const table = reactive(
       }),
       new BodyRowModel({
         item: {
-          id: 3,
+          id: "234GTGYW257",
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
@@ -107,7 +107,7 @@ const product = reactive(new ProductModel({
 
 const initState = () => {
   tabs.setActiveTabByPath(route.params.type as string)
-  table.setActiveRow(Number(route.query.id))
+  table.setActiveRow(route.query.id as string)
 }
 
 onMounted(() => {
@@ -130,6 +130,7 @@ const rowClickHandler = (data: any) => {
 <style lang="scss" scoped>
 .production-page-content {
   display: flex;
+  height: 100%;
 
   .table-section,
   .product-section {
