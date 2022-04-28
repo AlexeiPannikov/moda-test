@@ -13,17 +13,17 @@
     <div class="production-page-content">
       <!-- products table -->
       <section class="table-section">
-        <ui-table :table-model="table" @on-row-click="rowClickHandler">
+        <ui-table :table-model="table" :table-styles="tableStyles" @on-row-click="rowClickHandler">
           <template #header>
-            <table-header-item>Client</table-header-item>
-            <table-header-item>Job Code</table-header-item>
-            <table-header-item>Job Name</table-header-item>
+            <table-header-item :styles="tableHeaderItemStyles">Client</table-header-item>
+            <table-header-item :styles="tableHeaderItemStyles">Job Code</table-header-item>
+            <table-header-item :styles="tableHeaderItemStyles">Job Name</table-header-item>
           </template>
 
           <template #item="data">
-            <table-body-item>{{ data.item.client }}</table-body-item>
-            <table-body-item>{{ data.item.code }}</table-body-item>
-            <table-body-item>{{ data.item.name }}</table-body-item>
+            <table-body-item :styles="tableBodyItemStyle">{{ data.item.client }}</table-body-item>
+            <table-body-item :styles="tableBodyItemStyle">{{ data.item.code }}</table-body-item>
+            <table-body-item :styles="tableBodyItemStyle">{{ data.item.name }}</table-body-item>
           </template>
         </ui-table>
       </section>
@@ -52,6 +52,7 @@ import { useRoute, useRouter } from "vue-router";
 import { onMounted, onUpdated } from "vue";
 import ProductCard from "./components/product-card/product-card.vue";
 import { ProductModel } from "./components/product-card/ProductModel";
+import { TableStylesModel } from "@/components/ui-table/models/TableStylesModel";
 
 const route = useRoute()
 const router = useRouter()
@@ -97,6 +98,51 @@ const table = reactive(
   })
 );
 
+const tableStyles = new TableStylesModel({
+  headerStyles: {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridGap: '2px',
+    padding: '2px'
+  },
+  rowStyles: {
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gridGap: '2px',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+    padding: '10px 5px 8px 10px',
+    width: '100%',
+    backgroundColor: 'transparent',
+    transition: 'background-color 0.15s linear',
+    position: 'relative',
+    zIndex: 2,
+  },
+  activeRowStyles: {
+    backgroundColor: 'var(--main-color)',
+    color: 'white'
+  }
+})
+
+const tableHeaderItemStyles = {
+  width: '100%',
+  backgroundColor: '#dedede',
+  color: 'black',
+  fontSize: '18px',
+  fontWeight: '500',
+  minWidth: 'max-content',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '15px',
+}
+
+const tableBodyItemStyle = {
+  width: '100%',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  color: '#343545',
+  paddingLeft: '20px',
+}
+
 const product = reactive(new ProductModel({
   code: 'B08MY774GF',
   jobCode: 'Kelvin testing',
@@ -130,7 +176,7 @@ const rowClickHandler = (data: any) => {
 <style lang="scss" scoped>
 .production-page-content {
   display: flex;
-  height: 100%;
+  flex: 1 1 100%;
 
   .table-section,
   .product-section {

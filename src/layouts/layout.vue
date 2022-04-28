@@ -14,14 +14,15 @@ import headerLayout from './header-layout/header-layout.vue';
 
 <style lang="scss" scoped>
 .main-wrapper {
-    height: 100%;
-    max-height: 100%;
+    height: 100vh;
     background-color: var(--background-main-color);
     display: flex;
     flex-direction: column;
 
     .main {
-        height: 100%;
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 100%;
     }
 }
 </style>
