@@ -65,12 +65,10 @@ const iconClickHandler = () => {
 <style lang="scss" scoped>
 .header {
     background-color: var(--header-background-color);
-    width: 100%;
-    height: 100%;
-    max-height: 73px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex: 0 0 73px;
     padding: 0 10px 0 42px;
 
     .header-logo {

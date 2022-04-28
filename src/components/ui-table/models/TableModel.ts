@@ -4,7 +4,7 @@ export class TableModel {
 
     bodyRows: BodyRowModel[] = new Array<BodyRowModel>();
 
-    setActiveRow(id: number) {
+    setActiveRow(id: number | string) {
         this.bodyRows.forEach(row => {
             row.isActive = row.item.id === id
         })

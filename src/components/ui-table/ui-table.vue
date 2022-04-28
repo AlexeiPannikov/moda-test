@@ -1,20 +1,15 @@
 import { toRefs } from 'vue';
 <template>
-  <div class="table">
+  <div class="table" :style="props.tableStyles.tableStyle">
     <!-- TABLE HEADER  -->
-    <div class="table-header">
+    <div class="table-header" :style="props.tableStyles.headerStyles">
       <slot name="header"></slot>
     </div>
 
     <!-- TABLE  BODY  -->
     <transition-group name="list" mode="in-out">
-      <div
-        class="body-row"
-        :class="{ active: row.isActive }"
-        @click="clickRowHandler(row)"
-        v-for="row in props.tableModel.bodyRows"
-        :key="row.item.id"
-      >
+      <div class="body-row" :style="props.tableStyles.rowStyles" :class="{ active: row.isActive }" @click="clickRowHandler(row)"
+        v-for="row in props.tableModel.bodyRows" :key="row.item.id">
         <slot name="item" :item="row.item" />
       </div>
     </transition-group>
@@ -24,6 +19,7 @@ import { toRefs } from 'vue';
 <script lang="ts">
 import { BodyRowModel } from "./models/BodyRowModel";
 import { TableModel } from "./models/TableModel";
+import { TableStylesModel } from "./models/TableStylesModel";
 
 export default {
   name: "custom-table",
@@ -33,19 +29,24 @@ export default {
 <script lang="ts" setup>
 interface Props {
   tableModel: TableModel;
+  tableStyles: TableStylesModel
 }
 
 const props = withDefaults(defineProps<Props>(), {
   tableModel: () => new TableModel(),
+  tableStyles: () => new TableStylesModel()
 });
 
 const emit = defineEmits<{
   (e: "onRowClick", data: any): void;
 }>();
 
+const activeRowBack = (props.tableStyles.activeRowStyles as any).backgroundColor
+const activeRowColor = (props.tableStyles.activeRowStyles as any).color
+
 const clickRowHandler = (row: BodyRowModel) => {
   props.tableModel.setActiveRow(row.item.id);
-  emit('onRowClick',row.item)
+  emit('onRowClick', row.item)
 };
 </script>
 
@@ -78,9 +79,6 @@ const clickRowHandler = (row: BodyRowModel) => {
   .table-header {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 2px;
-    padding: 2px;
 
     .table-header-item:not(:last-child) {
       margin-right: 2px;
@@ -89,15 +87,6 @@ const clickRowHandler = (row: BodyRowModel) => {
 
   .body-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 2px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 10px 5px 10px 10px;
-    width: 100%;
-    background-color: transparent;
-    transition: background-color 0.15s linear;
-    position: relative;
-    z-index: 2;
 
     &:hover {
       background-color: #f3f3f3;
@@ -112,10 +101,10 @@ const clickRowHandler = (row: BodyRowModel) => {
   }
 
   .active {
-    background-color: var(--main-color);
+    background-color: v-bind(activeRowBack) !important;
 
-    &:deep() > div {
-      color: #fff;
+    &:deep()>div {
+      color: v-bind(activeRowColor) !important;
     }
 
     &:hover {
