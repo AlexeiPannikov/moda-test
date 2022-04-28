@@ -1,7 +1,7 @@
 <template>
     <div class="overview">
         <div class="overview-main">
-            <component v-for="[key, item] in OverviewData.overviewList" :key="key" :is="item.component" :item="item" />
+            <component v-for="(item, idx) in OverviewList.fullList" :key="idx" :is="item.component" :item="item" />
         </div>
 
         <div class="filter">
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import OverviewData from './OverviewList'
+import OverviewList from './OverviewList'
 
 </script>
 

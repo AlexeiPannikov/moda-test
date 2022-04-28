@@ -23,8 +23,6 @@ export class TabsModel<T> {
     setActiveTabByQuery(tabField: string, queryPayload: string) {
         this.tabList.forEach(tab => {
             tab.isActive = (tab as any)[tabField] === queryPayload
-            console.log(tab.name, tab.isActive);
-
         })
     }
 
