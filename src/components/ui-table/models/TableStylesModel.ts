@@ -6,6 +6,7 @@ export class TableStylesModel {
     headerStyles: object = {};
     rowStyles: object = {};
     activeRowStyles: object = {};
+    hoverRowStyles: object = {};
 
     constructor(obj?: Partial<TableStylesModel>) {
         if (obj) {

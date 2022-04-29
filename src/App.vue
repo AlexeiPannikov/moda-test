@@ -15,7 +15,6 @@
 * {
   box-sizing: border-box;
   font-family: 'Roboto', 'sans-serif';
-  letter-spacing: 1px;
 }
 
 .button {

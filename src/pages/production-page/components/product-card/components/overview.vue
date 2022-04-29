@@ -22,11 +22,13 @@
                 </template>
 
                 <template #item="data">
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.client }}</table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.code }}</table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.name }}</table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.name }}</table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.name }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.step }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">
+                        <product-status :status="data.item.status" />
+                    </table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.teamMember }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.date }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.time }}</table-body-item>
                 </template>
             </ui-table>
         </div>
@@ -42,16 +44,59 @@ import TableHeaderItem from '@/components/ui-table/table-header-item.vue';
 import TableBodyItem from '@/components/ui-table/table-body-item.vue';
 import OverviewList from './OverviewList'
 import { TableStylesModel } from '@/components/ui-table/models/TableStylesModel';
+import ProductStatus from '@/components/product-status/product-status.vue';
 
 const table = reactive(
     new TableModel({
         bodyRows: [
             new BodyRowModel({
                 item: {
-                    id: 'B08MY774GF',
-                    client: "Amazon Fashion",
-                    code: "Shoot on 15/03",
-                    name: "221 UOMO E-COM SFILATA PR",
+                    id: 1,
+                    step: "Amazon Fashion",
+                    status: 1,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 2,
+                    step: "Amazon Fashion",
+                    status: 2,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 3,
+                    step: "Amazon Fashion",
+                    status: 3,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 4,
+                    step: "Amazon Fashion",
+                    status: 1,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 5,
+                    step: "Amazon Fashion",
+                    status: 2,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
                 },
             }),
         ],
@@ -74,6 +119,7 @@ const tableStyles = new TableStylesModel({
         borderTop: '1px solid rgba(0, 0, 0, 0.05)',
         width: '100%',
         backgroundColor: 'transparent',
+        position: 'relative'
     }
 })
 
@@ -94,7 +140,8 @@ const tableBodyItemStyle = {
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     color: 'var(--text-main-color)',
-    padding: '15px 0'
+    padding: '15px 10px 15px 0',
+    fontSize: '16px'
 }
 
 </script>

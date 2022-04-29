@@ -43,6 +43,7 @@ const emit = defineEmits<{
 
 const activeRowBack = (props.tableStyles.activeRowStyles as any).backgroundColor
 const activeRowColor = (props.tableStyles.activeRowStyles as any).color
+const hoverRowColor = (props.tableStyles.hoverRowStyles as any).backgroundColor
 
 const clickRowHandler = (row: BodyRowModel) => {
   props.tableModel.setActiveRow(row.item.id);
@@ -89,7 +90,7 @@ const clickRowHandler = (row: BodyRowModel) => {
     display: grid;
 
     &:hover {
-      background-color: #f3f3f3;
+      background-color: v-bind(hoverRowColor) !important;
     }
 
     &::after {
@@ -108,7 +109,7 @@ const clickRowHandler = (row: BodyRowModel) => {
     }
 
     &:hover {
-      background-color: var(--main-color);
+      background-color: v-bind(activeRowBack) !important;
     }
 
     &::after {
@@ -116,7 +117,7 @@ const clickRowHandler = (row: BodyRowModel) => {
       display: block;
       position: absolute;
       z-index: 1;
-      background-color: var(--main-color);
+      background-color: v-bind(activeRowBack);
       right: -20px;
       top: 0;
       height: 103%;

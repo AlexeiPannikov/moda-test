@@ -117,7 +117,10 @@ const tableStyles = new TableStylesModel({
   },
   activeRowStyles: {
     backgroundColor: 'var(--main-color)',
-    color: 'white'
+    color: 'white',
+  },
+  hoverRowStyles: {
+    backgroundColor: '#f3f3f3',
   }
 })
 
@@ -139,7 +142,7 @@ const tableBodyItemStyle = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
-  color: '#343545',
+  color: 'var(-text-main-color)',
   paddingLeft: '20px',
 }
 
