@@ -1,6 +1,6 @@
 <template>
     <div class="product-status">
-        <div class="status-icon" :style="{background: 'url('+icon+')'}" />
+        <div class="status-icon" :style="{ background: 'url(' + icon + ')' }" />
         <div class="status-text">{{ text }}</div>
     </div>
 </template>
