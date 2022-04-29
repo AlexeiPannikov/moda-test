@@ -9,6 +9,9 @@
 import { ref } from '@vue/reactivity';
 import { onMounted } from 'vue';
 import { ProductStatusEnum } from './ProductStatusEnum';
+import DoneIcon from '@assets/icons/done.svg'
+import ToDoIcon from '@assets/icons/to-do.svg'
+import BacklogIcon from '@assets/icons/backlog.svg'
 
 const props = defineProps<{
     status: ProductStatusEnum
@@ -21,17 +24,17 @@ const text = ref("")
 const initComponent = () => {
     switch (props.status) {
         case ProductStatusEnum.Done:
-            icon.value = "'../../assets/icons/done.svg'"
+            icon.value = DoneIcon
             color.value = '#14CC26'
             text.value = 'Done'
             break;
         case ProductStatusEnum.ToDo:
-            icon.value = "'@assets/icons/to-do.svg'"
+            icon.value = ToDoIcon
             color.value = '#499FFF'
             text.value = 'To Do'
             break;
         case ProductStatusEnum.Backlog:
-            icon.value = "'@assets/icons/backlog.svg'"
+            icon.value = BacklogIcon
             color.value = 'var(--text-main-color)'
             text.value = 'Backlog'
             break;
@@ -46,10 +49,12 @@ onMounted(() => {
 <style lang="scss" scoped>
 .product-status {
     display: flex;
+    align-items: center;
 
     .status-icon {
         width: 20px;
         height: 20px;
+        margin-right: 10px;
     }
 
     .status-text {}
