@@ -1,18 +1,23 @@
 import { toRefs } from 'vue';
 <template>
   <div class="table" :style="props.tableStyles.tableStyle">
+
     <!-- TABLE HEADER  -->
     <div class="table-header" :style="props.tableStyles.headerStyles">
       <slot name="header"></slot>
     </div>
 
     <!-- TABLE  BODY  -->
-    <transition-group name="list" mode="in-out">
-      <div class="body-row" :style="props.tableStyles.rowStyles" :class="{ active: row.isActive }" @click="clickRowHandler(row)"
-        v-for="row in props.tableModel.bodyRows" :key="row.item.id">
-        <slot name="item" :item="row.item" />
-      </div>
-    </transition-group>
+    <div class="table-body-wrap">
+      <scroll-box :is-scroll-off="!props.isScrollOn" :max-height="props.scrollHeight">
+        <transition-group name="list" mode="in-out">
+          <div class="body-row" :style="props.tableStyles.rowStyles" :class="{ active: row.isActive }"
+            @click="clickRowHandler(row)" v-for="row in props.tableModel.bodyRows" :key="row.item.id">
+            <slot name="item" :item="row.item" />
+          </div>
+        </transition-group>
+      </scroll-box>
+    </div>
   </div>
 </template>
 
@@ -27,14 +32,19 @@ export default {
 </script>
 
 <script lang="ts" setup>
+import ScrollBox from "../scroll-box/scroll-box.vue";
 interface Props {
   tableModel: TableModel;
-  tableStyles: TableStylesModel
+  tableStyles: TableStylesModel;
+  scrollHeight?: string,
+  isScrollOn?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
   tableModel: () => new TableModel(),
-  tableStyles: () => new TableStylesModel()
+  tableStyles: () => new TableStylesModel(),
+  scrollHeight: "100%",
+  isScrollOn: false
 });
 
 const emit = defineEmits<{
@@ -75,6 +85,8 @@ const clickRowHandler = (row: BodyRowModel) => {
 }
 
 .table {
+  display: flex;
+  flex-direction: column;
   background-color: white;
 
   .table-header {
@@ -86,44 +98,47 @@ const clickRowHandler = (row: BodyRowModel) => {
     }
   }
 
-  .body-row {
-    display: grid;
+  .table-body-wrap {
+    flex-grow: 1;
+    .body-row {
+      display: grid;
 
-    &:hover {
-      background-color: v-bind(hoverRowColor) !important;
+      &:hover {
+        background-color: v-bind(hoverRowColor) !important;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        z-index: -5;
+        transition: background-color 0.15s linear;
+      }
     }
 
-    &::after {
-      content: "";
-      display: block;
-      z-index: -5;
-      transition: background-color 0.15s linear;
-    }
-  }
-
-  .active {
-    background-color: v-bind(activeRowBack) !important;
-
-    &:deep()>div {
-      color: v-bind(activeRowColor) !important;
-    }
-
-    &:hover {
+    .active {
       background-color: v-bind(activeRowBack) !important;
-    }
 
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      z-index: 1;
-      background-color: v-bind(activeRowBack);
-      right: -20px;
-      top: 0;
-      height: 103%;
-      width: 20px;
-      clip-path: polygon(0 0, 0% 100%, 65% 50%);
-      transition: background-color 0.15s linear;
+      &:deep()>div {
+        color: v-bind(activeRowColor) !important;
+      }
+
+      &:hover {
+        background-color: v-bind(activeRowBack) !important;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: 1;
+        background-color: v-bind(activeRowBack);
+        right: -20px;
+        top: 0;
+        height: 103%;
+        width: 20px;
+        clip-path: polygon(0 0, 0% 100%, 65% 50%);
+        transition: background-color 0.15s linear;
+      }
     }
   }
 }

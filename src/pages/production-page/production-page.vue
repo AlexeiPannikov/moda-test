@@ -11,9 +11,11 @@
 
     <!-- Main content -->
     <div class="production-page-content">
+
       <!-- products table -->
       <section class="table-section">
-        <ui-table :table-model="table" :table-styles="tableStyles" @on-row-click="rowClickHandler">
+        <ui-table :is-scroll-on="true" :scroll-height="null" :table-model="table" :table-styles="tableStyles"
+          @on-row-click="rowClickHandler">
           <template #header>
             <table-header-item :styles="tableHeaderItemStyles">Client</table-header-item>
             <table-header-item :styles="tableHeaderItemStyles">Job Code</table-header-item>
@@ -88,7 +90,231 @@ const table = reactive(
       }),
       new BodyRowModel({
         item: {
-          id: "234GTGYW257",
+          id: "234GTGY567W257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTG345YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTG88YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GT990GYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW485257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW257232",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "23584GTGYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW012257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGY23450W257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234G5347TGYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTG622YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW252357",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW7809257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTG674YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234G568TGYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW6789257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW012257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGY355W257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW6342257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTG234YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGY5677W257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234G43634TGYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGY34666W257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GT6788YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTG900YW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGY0065W257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GT45768GYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GT3657GYW257",
+          client: "Amazon Fashion",
+          code: "Shoot on 15/03",
+          name: "221 UOMO E-COM SFILATA PR",
+        },
+      }),
+      new BodyRowModel({
+        item: {
+          id: "234GTGYW7978257",
           client: "Amazon Fashion",
           code: "Shoot on 15/03",
           name: "221 UOMO E-COM SFILATA PR",
@@ -102,7 +328,10 @@ const tableStyles = new TableStylesModel({
   headerStyles: {
     gridTemplateColumns: 'repeat(3, 1fr)',
     gridGap: '2px',
-    padding: '2px'
+    padding: '2px',
+  },
+  tableStyle: {
+    height: '100%',
   },
   rowStyles: {
     gridTemplateColumns: 'repeat(3, 1fr)',
@@ -179,11 +408,13 @@ const rowClickHandler = (data: any) => {
 <style lang="scss" scoped>
 .production-page-content {
   display: flex;
-  flex: 1 1 100%;
+  height: 100%;
+  max-height: 100%;
 
   .table-section,
   .product-section {
     box-shadow: var(--shadow);
+    height: 100%;
   }
 
   .table-section {

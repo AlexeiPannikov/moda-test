@@ -23,6 +23,8 @@ import headerLayout from './header-layout/header-layout.vue';
         display: flex;
         flex-direction: column;
         flex: 1 1 100%;
+        max-height: calc(100% - 73px);
+        overflow: hidden;
     }
 }
 </style>

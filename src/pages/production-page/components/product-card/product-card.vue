@@ -25,7 +25,9 @@
 
         <!-- Card body -->
         <main class="card-body">
-            <component :is="getComponent" />
+            <scroll-box>
+                <component :is="getComponent" />
+            </scroll-box>
         </main>
     </div>
 </template>
@@ -34,13 +36,13 @@
 import { ProductModel } from './ProductModel';
 import UiTabs from '@components/ui-tabs/ui-tabs.vue'
 import TabItemSlider from '@components/ui-tabs/tab-item-slider.vue'
-import { computed, reactive } from '@vue/reactivity';
+import { computed, reactive, ref } from '@vue/reactivity';
 import { TabItemModel } from '@/components/ui-tabs/TabItemModel';
 import { TabsModel } from '@/components/ui-tabs/TabsModel';
 import { useRoute, useRouter } from 'vue-router';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted, onUpdated } from 'vue';
 import Overview from "./components/overview.vue"
-
+import ScrollBox from '@/components/scroll-box/scroll-box.vue';
 
 interface IProps {
     product: ProductModel
@@ -76,11 +78,11 @@ onMounted(() => {
 })
 
 const getComponent = computed(() => {
-    switch(tabs.activeTab.name) {
+    switch (tabs.activeTab.name) {
         case "Overview":
             return Overview
     }
-}) 
+})
 
 // const emit = defineEmits<{
 
@@ -91,10 +93,13 @@ const getComponent = computed(() => {
 <style lang="scss" scoped>
 .product-card {
     background-color: white;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .card-header {
         background-color: var(--background-main-color);
-        padding: 20px;
+        padding: 20px 20px 0 20px;
 
         .product-code {
             margin-bottom: 40px;
@@ -112,6 +117,11 @@ const getComponent = computed(() => {
                 color: var(--main-color);
             }
         }
+    }
+
+    .card-body {
+        height: 100%;
+        flex-grow: 1;
     }
 }
 </style>

@@ -99,6 +99,46 @@ const table = reactive(
                     time: "3:19 PM",
                 },
             }),
+            new BodyRowModel({
+                item: {
+                    id: 5,
+                    step: "Amazon Fashion",
+                    status: 2,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 5,
+                    step: "Amazon Fashion",
+                    status: 2,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 5,
+                    step: "Amazon Fashion",
+                    status: 2,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
+            new BodyRowModel({
+                item: {
+                    id: 5,
+                    step: "Amazon Fashion",
+                    status: 2,
+                    teamMember: "Asistant: Fabio Loparco",
+                    date: "03/18/2022",
+                    time: "3:19 PM",
+                },
+            }),
         ],
     })
 );
