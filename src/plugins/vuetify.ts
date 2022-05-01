@@ -4,7 +4,20 @@ import 'vuetify/styles'
 
 // Vuetify
 import { createVuetify } from 'vuetify'
+import { ThemeDefinition } from 'vuetify'
 
-export default createVuetify(
-  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-)
+const myCustomLightTheme: ThemeDefinition = {
+  dark: false,
+  colors: {
+    background: '#f5f5f5',
+  }
+}
+
+export default createVuetify({
+  theme: {
+    defaultTheme: 'myCustomLightTheme',
+    themes: {
+      myCustomLightTheme,
+    }
+  }
+})

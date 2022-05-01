@@ -35,11 +35,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .page-template {
     padding: 40px 50px 20px 50px;
-    flex: 0 0 100%;
     max-height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
 
     .toolbar {
         margin-bottom: 22px;

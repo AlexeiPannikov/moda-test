@@ -27,6 +27,10 @@
   outline: none;
 }
 
+html {
+  overflow: hidden !important;
+}
+
 body {
   font-weight: 400;
   font-size: 14px;
