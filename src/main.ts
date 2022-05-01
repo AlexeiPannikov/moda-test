@@ -1,9 +1,14 @@
+import 'vuetify/styles'
 import { createApp } from 'vue'
+import { createVuetify } from 'vuetify'
 import App from './App.vue'
-import router from './router/router'
-import {clickOutside} from './directives/ClickOutside'
+import { loadFonts } from './plugins/webfontloader'
 
 const app = createApp(App)
-app.use(router)
-app.directive('click-outside', clickOutside)
+const vuetify = createVuetify()
+
+loadFonts()
+
+app.use(vuetify)
+
 app.mount('#app')

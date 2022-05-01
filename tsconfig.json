@@ -8,19 +8,9 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
-    "strictNullChecks": false,
     "isolatedModules": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@components/*": ["./src/components/*"],
-      "@functions/*": ["./src/functions/*"],
-      "@layouts/*": ["./src/components/layouts/*"],
-      "@pages/*": ["./src/components/pages/*"],
-    },
+    "lib": ["esnext", "dom"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
