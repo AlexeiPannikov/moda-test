@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import * as path from 'path'
 import { ViteAliases } from "vite-aliases"
+import vuetify from '@vuetify/vite-plugin'
 // require('dotenv').config()
 
 // https://vitejs.dev/config/
@@ -18,7 +19,12 @@ export default defineConfig({
     },
   },
 
-  plugins: [vue(), ViteAliases()],
+  plugins: [
+    vue(),
+    vuetify({
+      autoImport: true,
+    }),
+    ViteAliases()],
 
   build: {
     outDir: 'dist'
