@@ -1,26 +1,33 @@
 <template>
-  <v-app>
-    <v-main>
-      <HelloWorld/>
+  <v-app class="h-screen d-flex">
+    <header-layout />
+    <v-main class="main">
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts" setup>
+import HeaderLayout from './layouts/header-layout.vue';
 
-export default defineComponent({
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data () {
-    return {
-      //
-    }
-  },
-})
 </script>
+
+<style lang="scss">
+html {
+  overflow: hidden;
+}
+
+.main {
+  max-height: 100vh;
+  flex-grow: 1;
+}
+
+.v-application__wrap {
+  height: 100vh;
+  min-height: auto !important;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+</style>
