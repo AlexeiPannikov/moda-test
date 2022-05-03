@@ -5,7 +5,7 @@ import CheckedIn from './checked-in.vue'
 import StyleGuide from './style-guide.vue'
 import { reactive } from 'vue'
 
-export default reactive(new OverviewModel({
+const overviewList = new OverviewModel({
     task: [
         new OverviewItemModel({ id: 5, label: 'Production Type', value: 'ON MODEL', isVisible: true, component: OverviewItem }),
         new OverviewItemModel({ id: 4, label: 'Style Guide', value: 'Men - Woman Ovensize MULTIPACKS PIN', isVisible: true, component: StyleGuide }),
@@ -19,4 +19,6 @@ export default reactive(new OverviewModel({
     sample: [
         new OverviewItemModel({ id: 1, label: 'Checked In', isVisible: true, component: CheckedIn }),
     ],
-}))
+})
+
+export default reactive(overviewList)

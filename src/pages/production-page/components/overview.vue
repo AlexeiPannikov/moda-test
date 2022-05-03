@@ -7,13 +7,13 @@
                         <v-col class="d-flex flex-column mr-2">
                             <div class="text-primary text-h5 mb-2 font-weight-bold">AVAILABLE TO DISPLAY</div>
                             <v-card class="flex-grow-1 rounded-0 px-3 pt-3" flat border="1">
-                                <ui-search class="mb-5" />
-                                <div class="item-group" v-for="[title, group] in Object.entries(OverviewList)"
+                                <ui-search />
+                                <div class="item-group mt-5" v-for="[title, group] in Object.entries(OverviewList)"
                                     :key="title">
                                     <div v-if="group.length" class="item-group-title font-weight-bold">{{
                                             title.toLocaleUpperCase()
                                     }}</div>
-                                    <div v-for="item in group" :key="item.id">
+                                    <div v-for="item in group" :key="item.positionNumber">
                                         <v-checkbox class="ui-checkbox" :label="item.label" v-model="item.isChecked"
                                             color="primary" hide-details />
                                     </div>
@@ -21,8 +21,23 @@
                             </v-card>
                         </v-col>
                         <v-col class="d-flex flex-column">
-                            <div class="text-primary text-h5 mb-2 font-weight-bold">SELECTED TO DISPLAY</div>
-                            <v-card class="flex-grow-1 rounded-0" flat border="1"></v-card>
+                            <div class="text-primary text-h5 mb-2 font-weight-bold">SELECTED TO DISPLAY
+                                ({{ OverviewList.selectedItemNumber }})</div>
+                            <v-card class="flex-grow-1 rounded-0 px-3 pt-3" flat border="1">
+                                <draggable tag="div" :list="OverviewList.selectedItems" class="list-group"
+                                    handle=".handle" item-key="positionNumber">
+                                    <template #item="{ element }">
+                                        <div class="d-flex">
+                                            <v-icon class="handle pointer" color="text-secondary">mdi-drag</v-icon>
+                                            <span class="text">{{ element.label }} </span>
+                                            <v-spacer />
+                                            <v-icon class="pointer" color="text-secondary"
+                                                @click="removeFromSelected(element.id)">
+                                                mdi-delete-outline</v-icon>
+                                        </div>
+                                    </template>
+                                </draggable>
+                            </v-card>
                         </v-col>
                     </v-row>
                     <v-row class="flex-grow-0 mt-4 mb-5" no-gutters>
@@ -81,8 +96,11 @@ import ProductStatus from '@/components/product-status/product-status.vue';
 import ButtonBlue from '@components/buttons/button-blue.vue';
 import ButtonWhite from '@components/buttons/button-white.vue';
 import UiSearch from '@components/ui-search/ui-search.vue';
+import draggable from 'vuedraggable'
 
 const drawer = ref(false)
+
+const drag = ref(false)
 
 const table = reactive(
     new TableModel({
@@ -222,6 +240,12 @@ const tableBodyItemStyle = {
     fontSize: '16px'
 }
 
+const removeFromSelected = (id: number) => {
+    OverviewList.selectedItems.forEach(item => {
+        item.isChecked = item.id !== id
+    })
+}
+
 const cancel = () => {
     drawer.value = false
 }
@@ -252,6 +276,10 @@ const update = () => {
             }
         }
     }
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 .ui-checkbox {

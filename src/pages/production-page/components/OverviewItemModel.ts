@@ -4,6 +4,8 @@ export class OverviewItemModel {
 
     id: number = 0;
 
+    positionNumber: number = 0;
+
     label: string = "";
 
     value: string = "";
@@ -22,10 +24,15 @@ export class OverviewItemModel {
         this.isVisible = this.isChecked;
     }
 
+    initPosition() {
+        this.positionNumber = this.id
+    }
+
     constructor(obj?: Partial<OverviewItemModel>) {
         if (obj) {
             Object.assign(this, obj)
         }
         this.initIsChecked()
+        this.initPosition()
     }
 }
