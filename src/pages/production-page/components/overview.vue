@@ -1,14 +1,47 @@
 <template>
     <div class="overview">
+        <teleport to="body">
+            <v-navigation-drawer class="w-50" v-model="drawer" absolute temporary>
+                <v-container class="h-100 d-flex flex-column">
+                    <v-row class="flex-grow-1" no-gutters>
+                        <v-col class="d-flex flex-column mr-2">
+                            <div class="text-primary text-h5 mb-2 font-weight-bold">AVAILABLE TO DISPLAY</div>
+                            <v-card class="flex-grow-1 rounded-0 px-3 pt-3" flat border="1">
+                                <ui-search class="mb-5" />
+                                <div class="item-group" v-for="[title, group] in Object.entries(OverviewList)"
+                                    :key="title">
+                                    <div v-if="group.length" class="item-group-title font-weight-bold">{{
+                                            title.toLocaleUpperCase()
+                                    }}</div>
+                                    <div v-for="item in group" :key="item.id">
+                                        <v-checkbox class="ui-checkbox" :label="item.label" v-model="item.isChecked"
+                                            color="primary" hide-details />
+                                    </div>
+                                </div>
+                            </v-card>
+                        </v-col>
+                        <v-col class="d-flex flex-column">
+                            <div class="text-primary text-h5 mb-2 font-weight-bold">SELECTED TO DISPLAY</div>
+                            <v-card class="flex-grow-1 rounded-0" flat border="1"></v-card>
+                        </v-col>
+                    </v-row>
+                    <v-row class="flex-grow-0 mt-4 mb-5" no-gutters>
+                        <v-spacer />
+                        <button-white @click="cancel" class="mr-2">Cancel</button-white>
+                        <button-blue @click="update">Update</button-blue>
+                    </v-row>
+                </v-container>
+            </v-navigation-drawer>
+        </teleport>
+
         <div class="overview-items-wrap">
 
             <div class="overview-items">
                 <component v-for="(item, idx) in OverviewList.fullList" :key="idx" :is="item.component" :item="item" />
             </div>
 
-            <div class="filter">
-                <img src="@assets/icons/filter.svg" alt="filter">
-            </div>
+            <v-btn @click="drawer = !drawer" class="text-text-secondary" icon="mdi-tune-vertical" flat height="24"
+                width="24" />
         </div>
 
         <div class="table">
@@ -38,13 +71,18 @@
 <script lang="ts" setup>
 import { BodyRowModel } from '@/components/ui-table/models/BodyRowModel';
 import { TableModel } from '@/components/ui-table/models/TableModel';
-import { reactive } from '@vue/reactivity';
+import { reactive, ref } from '@vue/reactivity';
 import UiTable from '@/components/ui-table/ui-table.vue';
 import TableHeaderItem from '@/components/ui-table/table-header-item.vue';
 import TableBodyItem from '@/components/ui-table/table-body-item.vue';
 import OverviewList from './OverviewList'
 import { TableStylesModel } from '@/components/ui-table/models/TableStylesModel';
 import ProductStatus from '@/components/product-status/product-status.vue';
+import ButtonBlue from '@components/buttons/button-blue.vue';
+import ButtonWhite from '@components/buttons/button-white.vue';
+import UiSearch from '@components/ui-search/ui-search.vue';
+
+const drawer = ref(false)
 
 const table = reactive(
     new TableModel({
@@ -184,6 +222,15 @@ const tableBodyItemStyle = {
     fontSize: '16px'
 }
 
+const cancel = () => {
+    drawer.value = false
+}
+
+const update = () => {
+    OverviewList.updateVisible()
+    drawer.value = false
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -204,6 +251,23 @@ const tableBodyItemStyle = {
                 cursor: pointer;
             }
         }
+    }
+}
+
+.ui-checkbox {
+    &:deep().v-selection-control {
+        height: 30px !important;
+    }
+
+    &:deep().v-label {
+        color: rgb(var(--v-theme-text-primary)) !important;
+        opacity: 1 !important;
+    }
+
+    &:deep().v-selection-control__input,
+    &:deep().v-selection-control__wrapper {
+        width: 24px !important;
+        margin-right: 7px;
     }
 }
 </style>

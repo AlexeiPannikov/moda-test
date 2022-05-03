@@ -12,9 +12,12 @@ const myCustomLightTheme: ThemeDefinition = {
   colors: {
     background: '#f5f5f5',
     primary: '#499FFF',
+    'primary-darken': '#348AE9',
     'text-primary': "#000000",
     'text-secondary': "#7B7B7B",
     'tab-slider-hover': "#f2f2f2",
+    green: '#14CC26',
+    'green-darken': '#34BF41'
   }
 }
 

@@ -21,6 +21,12 @@ export class OverviewModel {
         return fullList
     }
 
+    updateVisible() {
+        Object.entries(this).forEach(([, value]) => {
+            value.forEach((item: { updateIsVisible: () => any; }) => item.updateIsVisible())
+        })
+    }
+
     constructor(obj?: Partial<OverviewModel>) {
         if (obj) {
             Object.assign(this, obj)

@@ -13,6 +13,10 @@ import HeaderLayout from './layouts/header-layout.vue';
 </script>
 
 <style lang="scss">
+// div, a {
+//   color: rgb(var(--v-theme-text-primary));
+// }
+
 html {
   overflow: hidden;
 }
