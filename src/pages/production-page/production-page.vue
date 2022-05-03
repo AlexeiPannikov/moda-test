@@ -1,17 +1,29 @@
 <template>
     <v-container class="d-flex flex-column h-100">
         <v-row class="pt-5 flex-grow-0 table-tabs" no-gutters>
-            <v-tabs class="tabs w-100" slider-color="primary" hide-slider density="comfortable">
-                <v-tab :to="{ name: 'production-type', params: { type: 'in-progress' } }">
-                    IN PROGRESS
-                </v-tab>
-                <v-tab :to="{ name: 'production-type', params: { type: 'to-do' } }">
-                    TO DO
-                </v-tab>
-                <v-tab :to="{ name: 'production-type', params: { type: 'rejected' } }">
-                    REJECTED
-                </v-tab>
-            </v-tabs>
+            <v-col>
+                <v-tabs class="tabs w-100" slider-color="primary" hide-slider density="comfortable">
+                    <v-tab :to="{ name: 'production-type', params: { type: 'in-progress' } }">
+                        IN PROGRESS
+                    </v-tab>
+                    <v-tab :to="{ name: 'production-type', params: { type: 'to-do' } }">
+                        TO DO
+                    </v-tab>
+                    <v-tab :to="{ name: 'production-type', params: { type: 'rejected' } }">
+                        REJECTED
+                    </v-tab>
+                </v-tabs>
+            </v-col>
+
+            <v-col class="d-flex justify-end align-center">
+                <div class="filter-tools">
+                    <div class="filter d-flex align-center" style="cursor: pointer">
+                        <img class="mr-2" :src="FilterIcon">
+                        Filter
+                    </div>
+                    
+                </div>
+            </v-col>
         </v-row>
         <v-row class="flex-grow-1 mt-5 bottom-row" no-gutters>
             <v-col class="mr-5 h-100">
@@ -75,7 +87,7 @@ import TableBodyItem from "@components/ui-table/table-body-item.vue"
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Overview from "./components/overview.vue"
-import ScrollBox2 from '@/components/scroll-box/scroll-box-2.vue';
+import FilterIcon from "@assets/icons/filter.svg"
 
 const router = useRouter()
 const route = useRoute()
@@ -422,6 +434,7 @@ const setCurrentComponent = (component: any) => {
     max-height: 100%;
     flex-grow: 1;
 }
+
 .table-tabs {
     .v-tab--selected {
         background-color: rgb(var(--v-theme-primary));
