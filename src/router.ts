@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import ErrorPage from "@pages/error-page.vue";
-import Production from "@/pages/production-page/production-page.vue";
+import Production from "@pages/production-page/production-page.vue";
+import StudioSettings from "@pages/settings-pages/studio-settings-page.vue"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -10,12 +11,11 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: "/production",
-        name: "production",
-        component: Production
+        redirect: { name: "production", params: { type: "in-progress" } }
     },
     {
         path: "/production/:type",
-        name: "production-type",
+        name: "production",
         component: Production
     },
     {
@@ -58,6 +58,25 @@ const routes: RouteRecordRaw[] = [
         name: "labs",
         component: Production
     },
+
+    /* --------------------- Settings ------------------------ */
+    {
+        path: "/settings",
+        redirect: { name: "studio-settings" }
+    },
+    {
+        path: "/settings/studio",
+        component: StudioSettings,
+        children: [
+            {
+                path: "/settings/studio/:item",
+                name: "studio",
+                component: StudioSettings,
+            }
+        ]
+    },
+
+
     {
         path: '/:pathMatch(.*)*',
         name: 'error-page',

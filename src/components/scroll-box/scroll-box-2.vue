@@ -22,6 +22,17 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const scrollBox = <Ref<HTMLElement>>ref(null)
 
+const scrollBarWidth = ref('0')
+
+const toggleVisibleScroll = (event: any) => {
+    if (scrollBox.value.contains(event.target)) {
+        scrollBarWidth.value = '6px';
+    }
+    else {
+        scrollBarWidth.value = '0'
+    }
+}
+
 const setMaxHeight = () => {
     scrollBox.value.style.maxHeight = "1px"
     if (props.maxHeight) {
@@ -35,6 +46,7 @@ const setMaxHeight = () => {
 onMounted(() => {
     setMaxHeight()
     addEventListener('resize', setMaxHeight)
+    addEventListener('mousemove', toggleVisibleScroll)
 })
 
 onUpdated(() => {
@@ -47,6 +59,7 @@ watch(scrollBox, () => {
 
 onUnmounted(() => {
     removeEventListener('resize', setMaxHeight)
+    addEventListener('mousemove', toggleVisibleScroll)
 })
 </script>
 
@@ -56,8 +69,8 @@ onUnmounted(() => {
     flex-grow: 1;
 
     .scroll-box {
-        overflow-y: scroll;
-        overflow-x: hidden;
+        overflow-y: overlay;
+        overflow-x: overlay;
 
         &::-webkit-scrollbar-track {
             background: white;
@@ -67,7 +80,8 @@ onUnmounted(() => {
         &::-webkit-scrollbar {
             background: #7B7B7B;
             border-radius: 4px;
-            width: 6px;
+            width: v-bind(scrollBarWidth);
+            position: absolute;
         }
 
         &::-webkit-scrollbar-thumb {

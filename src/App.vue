@@ -34,4 +34,8 @@ html {
   display: flex;
   flex-direction: column;
 }
+
+.v-card--variant-contained {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25) !important;
+}
 </style>

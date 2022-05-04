@@ -1,10 +1,10 @@
 <template>
-    <v-app-bar class="header pl-9 pr-3" app flat absolute>
+    <v-app-bar class="header pl-9 pr-3" flat absolute>
         <div class="logo">
             Logo
         </div>
         <v-tabs class="tabs w-100" color="text-primary" slider-color="primary" alignWithTitle showArrows optional>
-            <v-tab :to="{ name: 'production' }">
+            <v-tab :to="{ name: 'production', params: {type: 'in-progress'} }">
                 PRODUCTION
             </v-tab>
             <v-tab :to="{ name: 'jobs' }">
@@ -47,7 +47,7 @@
         </v-tabs>
 
         <div class="icon-group mr-4">
-            <v-btn icon="mdi-keyboard-outline" class="mr-2 text-text-secondary" v-bind="props" width="24" height="24" />
+            <v-btn icon="mdi-keyboard-outline" class="mr-2 text-text-secondary" width="24" height="24" />
             <v-tooltip anchor="bottom">
                 <template v-slot:activator="{ props }">
                     <v-btn icon="mdi-clock-time-two-outline" class="text-text-secondary" v-bind="props" width="24"
@@ -71,7 +71,7 @@
                 <v-list-item class="list-item pl-9">
                     <v-list-item-title style="font-size: 13px;">MY SETTINGS</v-list-item-title>
                 </v-list-item>
-                <v-list-item class="list-item pl-9">
+                <v-list-item class="list-item pl-9" :to="{ name: 'studio', params: {item: 'general'} }">
                     <v-list-item-title style="font-size: 13px;">STUDIO SETTINGS</v-list-item-title>
                 </v-list-item>
                 <v-list-item class="list-item pl-9">
@@ -174,21 +174,25 @@ const tasks = reactive([
     }
 }
 
-.list-item.v-list-item--active {
-    border-left: 4px solid rgb(var(--v-theme-primary));
-    background-color: white;
+// .list-item {
+//     border-left: 4px solid transparent !important;
 
-    &:hover {
-        background-color: #f8f8f8;
-        border-left: 4px solid rgb(var(--v-theme-primary));
-    }
-}
+//     &:hover {
+//         background-color: #f8f8f8;
+//         border-color: rgb(var(--v-theme-primary)) !important;
+//     }
+// }
 
-.list-item.v-list-item--active .v-list-item__overlay {
+// .list-item.v-list-item--active {
+// border-left: 4px solid rgb(var(--v-theme-primary));
+// background-color: white;
+// }
+
+.list-item.list-item.v-list-item--active .v-list-item__overlay {
     opacity: 0 !important;
 }
 
-.v-list-item {
+.list-item.v-list-item {
     cursor: pointer;
 
     &:hover {
@@ -208,6 +212,12 @@ const tasks = reactive([
 
     &:hover::before {
         background-color: rgb(var(--v-theme-primary));
+    }
+
+    &.v-list-item--active {
+        &::before {
+            background-color: rgb(var(--v-theme-primary));
+        }
     }
 }
 </style>

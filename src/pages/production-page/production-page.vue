@@ -3,13 +3,13 @@
         <v-row class="pt-5 flex-grow-0 table-tabs" no-gutters>
             <v-col>
                 <v-tabs class="tabs w-100" slider-color="primary" hide-slider density="comfortable">
-                    <v-tab :to="{ name: 'production-type', params: { type: 'in-progress' } }">
+                    <v-tab :to="{ name: 'production', params: { type: 'in-progress' } }">
                         IN PROGRESS
                     </v-tab>
-                    <v-tab :to="{ name: 'production-type', params: { type: 'to-do' } }">
+                    <v-tab :to="{ name: 'production', params: { type: 'to-do' } }">
                         TO DO
                     </v-tab>
-                    <v-tab :to="{ name: 'production-type', params: { type: 'rejected' } }">
+                    <v-tab :to="{ name: 'production', params: { type: 'rejected' } }">
                         REJECTED
                     </v-tab>
                 </v-tabs>
@@ -92,8 +92,7 @@ import { useRoute, useRouter } from 'vue-router';
 import Overview from "./components/overview.vue"
 import FilterIcon from "@assets/icons/filter.svg"
 import SearchIcon from "@assets/icons/search-big.svg"
-import scrollBox2 from "@/components/scroll-box/scroll-box-2.vue";
-import { computed } from '@vue/reactivity';
+import scrollBox2 from "@components/scroll-box/scroll-box-2.vue";
 
 
 const router = useRouter()
@@ -435,16 +434,12 @@ onMounted(() => {
 })
 
 const rowClickHandler = (data: any) => {
-    router.push({ name: 'production-type', params: { type: route.params.type }, query: { ...route.query, id: data.id } })
+    router.push({ name: 'production', params: { type: route.params.type }, query: { ...route.query, id: data.id } })
 }
 
-const cardTabClickHandler = (data: string) => {
-    router.push({ name: 'production-type', params: { type: route.params.type }, query: { ...route.query, action: data } })
-}
-
-// const setCurrentComponent = (component: any) => {
-//     currentComponent = component
-// } 
+// const cardTabClickHandler = (data: string) => {
+//     router.push({ name: 'production', params: { type: route.params.type }, query: { ...route.query, action: data } })
+// }
 </script>
 
 <style lang="scss" scoped>
