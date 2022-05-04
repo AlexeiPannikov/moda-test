@@ -24,15 +24,10 @@ export class OverviewItemModel {
         this.isVisible = this.isChecked;
     }
 
-    initPosition() {
-        this.positionNumber = this.id
-    }
-
     constructor(obj?: Partial<OverviewItemModel>) {
         if (obj) {
             Object.assign(this, obj)
         }
         this.initIsChecked()
-        this.initPosition()
     }
 }

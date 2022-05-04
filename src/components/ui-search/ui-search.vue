@@ -1,11 +1,15 @@
 <template>
     <div class="ui-search-wrap">
-        <input class="ui-search" :placeholder="placeholder" />
+        <input @input="$emit('update:modelValue', ($event as any).target.value)" class="ui-search" :placeholder="placeholder" />
     </div>
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
+    modelValue: {
+        type: String,
+        default: ""
+    },
     placeholder: {
         type: String,
         default: ""

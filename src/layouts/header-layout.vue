@@ -47,15 +47,11 @@
         </v-tabs>
 
         <div class="icon-group mr-4">
+            <v-btn icon="mdi-keyboard-outline" class="mr-2 text-text-secondary" v-bind="props" width="24" height="24" />
             <v-tooltip anchor="bottom">
                 <template v-slot:activator="{ props }">
-                    <v-btn icon="mdi-keyboard-outline" class="mr-2" v-bind="props" width="24" height="24" />
-                </template>
-                <span>Tooltip</span>
-            </v-tooltip>
-            <v-tooltip anchor="bottom">
-                <template v-slot:activator="{ props }">
-                    <v-btn icon="mdi-clock-time-two-outline" v-bind="props" width="24" height="24" />
+                    <v-btn icon="mdi-clock-time-two-outline" class="text-text-secondary" v-bind="props" width="24"
+                        height="24" />
                 </template>
                 <span>Tooltip</span>
             </v-tooltip>

@@ -1,11 +1,17 @@
 <template>
-    <v-btn class="white-button" color="white" flat>
+    <v-btn class="white-button" @click="$emit('click')" :size="props.size" color="white" flat>
         <slot />
     </v-btn>
 </template>
 
 <script lang="ts" setup>
+interface IProps {
+    size?: string | number
+}
 
+const props = withDefaults(defineProps<IProps>(), {
+    size: "default"
+})
 </script>
 
 <style lang="scss" scoped>

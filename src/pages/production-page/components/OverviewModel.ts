@@ -22,11 +22,24 @@ export class OverviewModel {
     }
 
     get selectedItems(): OverviewItemModel[] {
-        return this.fullList.filter(item => item.isChecked).sort((a, b) => a.positionNumber - b.positionNumber)
+        const items = this.fullList.filter(item => item.isChecked)
+        return items.sort((a, b) => a.positionNumber - b.positionNumber)
+    }
+
+    set selectedItems(value: Array<OverviewItemModel>) {
+        this.selectedItems = value
     }
 
     get selectedItemNumber(): number {
         return this.fullList.filter(item => item.isChecked).length
+    }
+
+    setPosition() {
+        if (this.selectedItemNumber) {
+            for (let i = 1; i >= this.selectedItems.length; i++) {
+                this.selectedItems[i].positionNumber = i
+            }
+        }
     }
 
     updateVisible() {

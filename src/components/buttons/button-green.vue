@@ -4,7 +4,12 @@
 </template>
 
 <script lang="ts" setup>
-
+interface IProps {
+    size?: string | number
+}
+const props = withDefaults(defineProps<IProps>(), {
+    size: "default"
+})
 </script>
 
 <style lang="scss" scoped>

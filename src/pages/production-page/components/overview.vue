@@ -5,27 +5,33 @@
                 <v-container class="h-100 d-flex flex-column">
                     <v-row class="flex-grow-1" no-gutters>
                         <v-col class="d-flex flex-column mr-2">
-                            <div class="text-primary text-h5 mb-2 font-weight-bold">AVAILABLE TO DISPLAY</div>
+                            <div class="text-primary text-h5 mb-2 font-weight-bold">
+                                AVAILABLE TO DISPLAY
+                            </div>
                             <v-card class="flex-grow-1 rounded-0 px-3 pt-3" flat border="1">
-                                <ui-search />
+                                <ui-search v-model="searchText" />
                                 <div class="item-group mt-5" v-for="[title, group] in Object.entries(OverviewList)"
                                     :key="title">
-                                    <div v-if="group.length" class="item-group-title font-weight-bold">{{
-                                            title.toLocaleUpperCase()
-                                    }}</div>
-                                    <div v-for="item in group" :key="item.positionNumber">
-                                        <v-checkbox class="ui-checkbox" :label="item.label" v-model="item.isChecked"
-                                            color="primary" hide-details />
+                                    <div v-if="(group as Array<OverviewItemModel>).length"
+                                        class="item-group-title font-weight-bold">
+                                        {{ title.toLocaleUpperCase() }}
+                                    </div>
+                                    <div v-for="item in getFilteredBySearch(group as Array<OverviewItemModel>)"
+                                        :key="(item as OverviewItemModel).id">
+                                        <v-checkbox class="ui-checkbox" :label="(item as OverviewItemModel).label"
+                                            v-model="(item as OverviewItemModel).isChecked" color="primary"
+                                            hide-details />
                                     </div>
                                 </div>
                             </v-card>
                         </v-col>
                         <v-col class="d-flex flex-column">
-                            <div class="text-primary text-h5 mb-2 font-weight-bold">SELECTED TO DISPLAY
-                                ({{ OverviewList.selectedItemNumber }})</div>
+                            <div class="text-primary text-h5 mb-2 font-weight-bold">
+                                SELECTED TO DISPLAY ({{ OverviewList.selectedItemNumber }})
+                            </div>
                             <v-card class="flex-grow-1 rounded-0 px-3 pt-3" flat border="1">
                                 <draggable tag="div" :list="OverviewList.selectedItems" class="list-group"
-                                    handle=".handle" item-key="positionNumber">
+                                    handle=".handle" item-key="positionNumber" @change="sort">
                                     <template #item="{ element }">
                                         <div class="d-flex">
                                             <v-icon class="handle pointer" color="text-secondary">mdi-drag</v-icon>
@@ -50,7 +56,6 @@
         </teleport>
 
         <div class="overview-items-wrap">
-
             <div class="overview-items">
                 <component v-for="(item, idx) in OverviewList.fullList" :key="idx" :is="item.component" :item="item" />
             </div>
@@ -70,13 +75,21 @@
                 </template>
 
                 <template #item="data">
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.step }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{
+                            data.item.step
+                    }}</table-body-item>
                     <table-body-item :styles="tableBodyItemStyle">
                         <product-status :status="data.item.status" />
                     </table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.teamMember }}</table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.date }}</table-body-item>
-                    <table-body-item :styles="tableBodyItemStyle">{{ data.item.time }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{
+                            data.item.teamMember
+                    }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{
+                            data.item.date
+                    }}</table-body-item>
+                    <table-body-item :styles="tableBodyItemStyle">{{
+                            data.item.time
+                    }}</table-body-item>
                 </template>
             </ui-table>
         </div>
@@ -84,23 +97,26 @@
 </template>
 
 <script lang="ts" setup>
-import { BodyRowModel } from '@/components/ui-table/models/BodyRowModel';
-import { TableModel } from '@/components/ui-table/models/TableModel';
-import { reactive, ref } from '@vue/reactivity';
-import UiTable from '@/components/ui-table/ui-table.vue';
-import TableHeaderItem from '@/components/ui-table/table-header-item.vue';
-import TableBodyItem from '@/components/ui-table/table-body-item.vue';
-import OverviewList from './OverviewList'
-import { TableStylesModel } from '@/components/ui-table/models/TableStylesModel';
-import ProductStatus from '@/components/product-status/product-status.vue';
-import ButtonBlue from '@components/buttons/button-blue.vue';
-import ButtonWhite from '@components/buttons/button-white.vue';
-import UiSearch from '@components/ui-search/ui-search.vue';
-import draggable from 'vuedraggable'
+import { BodyRowModel } from "@/components/ui-table/models/BodyRowModel";
+import { TableModel } from "@/components/ui-table/models/TableModel";
+import { computed, reactive, ref } from "@vue/reactivity";
+import UiTable from "@/components/ui-table/ui-table.vue";
+import TableHeaderItem from "@/components/ui-table/table-header-item.vue";
+import TableBodyItem from "@/components/ui-table/table-body-item.vue";
+import OverviewList from "./OverviewList";
+import { TableStylesModel } from "@/components/ui-table/models/TableStylesModel";
+import ProductStatus from "@/components/product-status/product-status.vue";
+import ButtonBlue from "@components/buttons/button-blue.vue";
+import ButtonWhite from "@components/buttons/button-white.vue";
+import UiSearch from "@components/ui-search/ui-search.vue";
+import draggable from "vuedraggable";
+import { OverviewItemModel } from "./OverviewItemModel"
 
-const drawer = ref(false)
+const drawer = ref(false);
 
-const drag = ref(false)
+const drag = ref(false);
+
+const searchText = ref("")
 
 const table = reactive(
     new TableModel({
@@ -201,60 +217,82 @@ const table = reactive(
 
 const tableStyles = new TableStylesModel({
     headerStyles: {
-        gridTemplateColumns: 'repeat(5, 1fr)',
+        gridTemplateColumns: "repeat(5, 1fr)",
     },
     tableStyle: {
-        background: '#F5F5F5',
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.25)',
-        borderRadius: '5px',
-        padding: '0 20px',
-        marginTop: '20px',
+        background: "#F5F5F5",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)",
+        borderRadius: "5px",
+        padding: "0 20px",
+        marginTop: "20px",
     },
     rowStyles: {
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        borderTop: '1px solid rgba(0, 0, 0, 0.05)',
-        width: '100%',
-        backgroundColor: 'transparent',
-        position: 'relative'
-    }
-})
+        gridTemplateColumns: "repeat(5, 1fr)",
+        borderTop: "1px solid rgba(0, 0, 0, 0.05)",
+        width: "100%",
+        backgroundColor: "transparent",
+        position: "relative",
+    },
+});
 
 const tableHeaderItemStyles = {
-    width: '100%',
-    color: 'var(--text-sub-color)',
-    fontSize: '16px',
-    fontWeight: '500',
-    minWidth: 'max-content',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '25px 0 15px 0',
-}
+    width: "100%",
+    color: "var(--text-sub-color)",
+    fontSize: "16px",
+    fontWeight: "500",
+    minWidth: "max-content",
+    display: "flex",
+    alignItems: "center",
+    padding: "25px 0 15px 0",
+};
 
 const tableBodyItemStyle = {
-    width: '100%',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    color: 'var(--text-main-color)',
-    padding: '15px 10px 15px 0',
-    fontSize: '16px'
-}
+    width: "100%",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    color: "var(--text-main-color)",
+    padding: "15px 10px 15px 0",
+    fontSize: "16px",
+};
 
-const removeFromSelected = (id: number) => {
-    OverviewList.selectedItems.forEach(item => {
-        item.isChecked = item.id !== id
+const getFilteredBySearch = (arr: OverviewItemModel[]) => {
+    const lowerCaseText = searchText.value.toLocaleLowerCase()
+    if (!lowerCaseText) {
+        return arr
+    }
+    return arr.filter(item => {
+        return item.label.toLocaleLowerCase().includes(lowerCaseText)
     })
 }
 
+const sort = ({ moved: { element, newIndex, oldIndex } }: any) => {
+    let selectedList = OverviewList.selectedItems
+    element.positionNumber = newIndex + 1;
+    [selectedList[oldIndex], selectedList[newIndex]] = [
+        selectedList[newIndex],
+        selectedList[oldIndex],
+    ];
+    selectedList.forEach((item, i) => {
+        item.positionNumber = i + 1;
+    });
+    console.log(selectedList);
+};
+
+const removeFromSelected = (id: number) => {
+    OverviewList.selectedItems.forEach((item) => {
+        item.isChecked = item.id !== id;
+    });
+};
+
 const cancel = () => {
-    drawer.value = false
-}
+    drawer.value = false;
+};
 
 const update = () => {
-    OverviewList.updateVisible()
-    drawer.value = false
-}
-
+    OverviewList.updateVisible();
+    drawer.value = false;
+};
 </script>
 
 <style lang="scss" scoped>

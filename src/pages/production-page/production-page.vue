@@ -15,13 +15,17 @@
                 </v-tabs>
             </v-col>
 
-            <v-col class="d-flex justify-end align-center">
-                <div class="filter-tools">
-                    <div class="filter d-flex align-center" style="cursor: pointer">
+            <v-col class="d-flex justify-end align-end">
+                <div class="filter-tools d-flex">
+                    <div class="filter d-flex align-center mr-3" style="cursor: pointer">
                         <img class="mr-2" :src="FilterIcon">
                         Filter
                     </div>
-                    
+                    <div @click="isOpenSearch = true" v-click-outside="closeSearch"
+                        class="search-input-wrap d-flex align-center" style="cursor: pointer">
+                        <img :src="SearchIcon" />
+                        <input v-model="searchText" :class="{ active: isOpenSearch }" type="text">
+                    </div>
                 </div>
             </v-col>
         </v-row>
@@ -59,16 +63,15 @@
 
                     <v-card-actions>
                         <v-tabs class="tabs w-100" slider-color="primary" density="comfortable">
-                            <v-tab v-for="item in cardTabs" :key="item.name"
-                                @click="setCurrentComponent(item.component)">
-                                {{ item.name }}
+                            <v-tab v-for="item in cardTabs" :key="item" @click="currentTab = item">
+                                {{ item }}
                             </v-tab>
                         </v-tabs>
                     </v-card-actions>
 
                     <div class="card-content-wrap">
                         <scroll-box-2>
-                            <component :is="currentComponent" />
+                            <component :is="components[currentTab]" />
                         </scroll-box-2>
                     </div>
                 </v-card>
@@ -84,22 +87,40 @@ import { TableStylesModel } from '@/components/ui-table/models/TableStylesModel'
 import UiTable from "@components/ui-table/ui-table.vue"
 import TableHeaderItem from "@components/ui-table/table-header-item.vue"
 import TableBodyItem from "@components/ui-table/table-body-item.vue"
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, shallowRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Overview from "./components/overview.vue"
 import FilterIcon from "@assets/icons/filter.svg"
+import SearchIcon from "@assets/icons/search-big.svg"
+import scrollBox2 from "@/components/scroll-box/scroll-box-2.vue";
+import { computed } from '@vue/reactivity';
+
 
 const router = useRouter()
 const route = useRoute()
 
-const currentComponent = ref(Overview);
+const currentTab = ref('Overview');
 
-const cardTabs = reactive([
-    { name: "Overview", component: Overview },
-    { name: "Styles", component: null },
-    { name: "Samples", component: null },
-    { name: "Assets", component: null },
-])
+const components = {
+    Overview
+}
+
+const searchText = ref("")
+
+const isOpenSearch = ref(false)
+
+const cardTabs = [
+    "Overview",
+    "Styles",
+    "Samples",
+    "Assets",
+]
+
+const closeSearch = () => {
+    if (!searchText.value) {
+        isOpenSearch.value = false;
+    }
+}
 
 const table = reactive(
     new TableModel({
@@ -411,28 +432,42 @@ onMounted(() => {
     if (route.query.id) {
         table.setActiveRow(route.query.id as string)
     }
-    if (route.query.action) {
-
-    }
 })
 
 const rowClickHandler = (data: any) => {
-    router.push({ name: 'production-type', query: { ...route.query, id: data.id } })
+    router.push({ name: 'production-type', params: { type: route.params.type }, query: { ...route.query, id: data.id } })
 }
 
 const cardTabClickHandler = (data: string) => {
     router.push({ name: 'production-type', params: { type: route.params.type }, query: { ...route.query, action: data } })
 }
 
-const setCurrentComponent = (component: any) => {
-    currentComponent.value = component
-} 
+// const setCurrentComponent = (component: any) => {
+//     currentComponent = component
+// } 
 </script>
 
 <style lang="scss" scoped>
 .card-content-wrap {
     max-height: 100%;
     flex-grow: 1;
+}
+
+.search-input-wrap {
+    input {
+        border-bottom: 1px solid rgb(var(--v-theme-text-secondary));
+        margin-left: 10px;
+        width: 0;
+        transition: width 0.2s ease-in-out;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .active {
+        width: 208px;
+    }
 }
 
 .table-tabs {
