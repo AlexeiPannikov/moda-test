@@ -1,5 +1,5 @@
 <template>
-    <v-btn class="white-button" @click="$emit('click')" :size="props.size" color="white" flat>
+    <v-btn class="white-button" :size="props.size" color="white" flat>
         <slot />
     </v-btn>
 </template>

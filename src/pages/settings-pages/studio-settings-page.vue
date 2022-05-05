@@ -1,32 +1,34 @@
 <template>
-    <v-container class="h-100 d-flex flex-column">
-        <v-row class="flex-grow-0" no-gutters>
+    <settings-page-template>
+        <template #title>
             <h1 class="text-h3 text-text-primary font-weight-light mb-4">Studio Settings</h1>
-        </v-row>
-        <v-row class="flex-grow-1" no-gutters>
-            <v-card class="h-100 w-100 d-flex px-5 py-5">
-                <v-row no-gutters>
-                    <v-col cols="2">
-                        <v-list class="menu-settings-list h-100" density="compact">
-                            <scroll-box-2>
-                                <settings-list-item v-for="item in menuList"
-                                    :to="{ name: 'studio', params: { item: item.pathParams } }" :key="item.name">
-                                    {{ item.name }}
-                                </settings-list-item>
-                            </scroll-box-2>
-                        </v-list>
-                    </v-col>
-                    <v-col cols="10"></v-col>
-                </v-row>
-            </v-card>
-        </v-row>
-    </v-container>
+        </template>
+
+        <template #menu>
+            <scroll-box-2>
+                <settings-list-item v-for="item in menuList" :to="{ name: 'studio', params: { item: item.pathParams } }"
+                    :key="item.name">
+                    {{ item.name }}
+                </settings-list-item>
+            </scroll-box-2>
+        </template>
+
+        <template #content>
+            <component :is="component"></component>
+        </template>
+    </settings-page-template>
 </template>
 
 <script lang="ts" setup>
+import { computed, shallowRef } from '@vue/reactivity';
 import { reactive } from 'vue';
-import SettingsListItem from './components/settings-list-item.vue';
-import scrollBox2 from "@components/scroll-box/scroll-box-2.vue";
+import { useRoute } from 'vue-router';
+import SettingsListItem from '@pages/components/settings-list-item.vue';
+import Clients from './clients/clients.vue'
+import ScrollBox2 from '@components/scroll-box/scroll-box-2.vue';
+import SettingsPageTemplate from '@pages/components/settings-page-template.vue';
+
+const route = useRoute()
 
 const menuList = reactive([
     { name: "GENERAL SETTINGS", pathParams: "general" },
@@ -44,10 +46,12 @@ const menuList = reactive([
     { name: "NETWORK PRINTERS", pathParams: "network" },
     { name: "PRINTER CONFIGURATIONS", pathParams: "configurations" },
 ])
-</script>
 
-<style lang="scss" scoped>
-.menu-settings-list {
-    border-right: 2px solid rgb(var(--v-theme-primary));
-}
-</style>
+const component = computed(() => {
+    switch (route.params.item) {
+        case "clients":
+            return Clients
+    }
+})
+
+</script>

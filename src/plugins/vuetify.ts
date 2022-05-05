@@ -16,6 +16,7 @@ const myCustomLightTheme: ThemeDefinition = {
     'text-primary': "#000000",
     'text-secondary': "#7B7B7B",
     'tab-slider-hover': "#f2f2f2",
+    'client-card-back': "#F5F5F5",
     green: '#14CC26',
     'green-darken': '#34BF41'
   }

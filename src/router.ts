@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import ErrorPage from "@pages/error-page.vue";
 import Production from "@pages/production-page/production-page.vue";
 import StudioSettings from "@pages/settings-pages/studio-settings-page.vue"
+import AddClient from "@/pages/add-client-page/add-client-page.vue"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -72,11 +73,14 @@ const routes: RouteRecordRaw[] = [
                 path: "/settings/studio/:item",
                 name: "studio",
                 component: StudioSettings,
-            }
+            },
         ]
     },
-
-
+    {
+        path: "/settings/studio/client/add-client/:item",
+        name: "add-client",
+        component: AddClient,
+    },
     {
         path: '/:pathMatch(.*)*',
         name: 'error-page',

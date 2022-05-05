@@ -59,7 +59,7 @@ watch(scrollBox, () => {
 
 onUnmounted(() => {
     removeEventListener('resize', setMaxHeight)
-    addEventListener('mousemove', toggleVisibleScroll)
+    removeEventListener('mousemove', toggleVisibleScroll)
 })
 </script>
 
