@@ -1,8 +1,9 @@
 <template>
-    <div class="ui-checkbox-wrap d-flex flex-column">
+    <div class="ui-checkbox-wrap d-flex align-center">
         <input class="ui-checkbox" :class="{ active: props.modelValue }" type="checkbox" :id="id.toString()"
             :value="props.modelValue" @input="click" />
         <label class="text-text-primary" :for="id.toString()">{{ label }}</label>
+        <slot></slot>
     </div>
 </template>
 

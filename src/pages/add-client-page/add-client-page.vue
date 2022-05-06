@@ -25,13 +25,15 @@ import SettingsListItem from '@pages/components/settings-list-item.vue';
 import ScrollBox2 from '@components/scroll-box/scroll-box-2.vue';
 import SettingsPageTemplate from '@pages/components/settings-page-template.vue';
 import Settings from './components/settings.vue'
+import SampleSettings from './components/sample-settings.vue'
+import DeliveryOptions from './components/delivery-options/delivery-options.vue';
 
 const route = useRoute()
 
 const menuList = reactive([
     { name: "SETTINGS", pathParams: "settings", component: shallowRef(Settings) },
-    { name: "SAMPLE SETTINGS", pathParams: "sample" },
-    { name: "DELIVERY OPTIONS", pathParams: "delivery" },
+    { name: "SAMPLE SETTINGS", pathParams: "sample", component: shallowRef(SampleSettings) },
+    { name: "DELIVERY OPTIONS", pathParams: "delivery", component: shallowRef(DeliveryOptions) },
     { name: "METADATA NAMESPACE", pathParams: "namespace" },
     { name: "DATA SOURCE", pathParams: "source" },
     { name: "REFERENCE IMAGE ALERTS", pathParams: "alerts" },

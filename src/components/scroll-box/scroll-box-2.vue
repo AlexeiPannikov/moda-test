@@ -44,7 +44,9 @@ const setMaxHeight = () => {
 }
 
 onMounted(() => {
-    setMaxHeight()
+    setTimeout(() => {
+        setMaxHeight()
+    }, 100)
     addEventListener('resize', setMaxHeight)
     addEventListener('mousemove', toggleVisibleScroll)
 })

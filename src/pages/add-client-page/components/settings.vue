@@ -5,29 +5,31 @@
         </template>
         <v-row no-gutters>
             <v-col cols="6">
-                <div class="w-75">
-                    <input-with-label class="mt-5" label="CLIENT NAME">
-                        <ui-text-input label="Add clients in bulk using semi-colon as separator"></ui-text-input>
-                        <ui-switch label="Enable Client"></ui-switch>
-                    </input-with-label>
-                    <input-with-label class="mt-5" label="USER GROUPS">
-                        <ui-switch label="Amazon"></ui-switch>
-                        <ui-switch label="RTL"></ui-switch>
-                        <ui-switch label="ETRO"></ui-switch>
-                    </input-with-label>
-                </div>
+                <input-with-label class="mt-9 w-75" label="CLIENT NAME">
+                    <ui-text-input label="Add clients in bulk using semi-colon as separator"></ui-text-input>
+                    <ui-switch label="Enable Client"></ui-switch>
+                </input-with-label>
             </v-col>
-            <v-col cols="6">
-                <div class="w-75">
-                    <input-with-label class="mt-5" label="CLIENT TIMEZONE">
-                        <ui-dropdown v-model="timezone" :items="timezones" placeholder="Select..."></ui-dropdown>
-                    </input-with-label>
-                </div>
+            <v-col cols="4">
+                <input-with-label class="mt-9" label="CLIENT TIMEZONE">
+                    <ui-dropdown v-model="currentTimezone" :items="timezonesList" placeholder="Select...">
+                    </ui-dropdown>
+                </input-with-label>
             </v-col>
         </v-row>
         <v-row no-gutters>
-            <v-col></v-col>
-            <v-col></v-col>
+            <v-col cols="6">
+                <input-with-label class="mt-9 w-75" label="USER GROUPS">
+                    <ui-switch label="Amazon"></ui-switch>
+                    <ui-switch label="RTL"></ui-switch>
+                    <ui-switch label="ETRO"></ui-switch>
+                </input-with-label>
+            </v-col>
+            <v-col cols="4">
+                <input-with-label class="mt-9" label="CLIENT TIMEZONE">
+                    <ui-file-input label="image/png, image/jpeg, image/jpg, image/jpe">JPG, JPE, JPEG and PNG ONLY</ui-file-input>
+                </input-with-label>
+            </v-col>
         </v-row>
     </add-client-component-template>
 </template>
@@ -39,21 +41,29 @@ import UiSwitch from '@/components/ui-switch/ui-switch.vue';
 import InputWithLabel from '../../../components/input-with-lable.vue/input-with-label.vue';
 import UiDropdown from '@/components/ui-dropdown/ui-dropdown.vue';
 import { reactive, ref } from 'vue';
-import momentTZ from 'moment-timezone';
 import { DropdownItemModel } from '@/components/ui-dropdown/DropdownItemModel';
+import { useTimezones } from '@/functions/useTimezones';
+import UiFileInput from '@/components/ui-file-input/ui-file-input.vue';
 
-const defaultTimeZone = momentTZ.tz.guess();
-const timeZonesList = momentTZ.tz.names();
+const timezones = useTimezones()
 
-const timezones = reactive([
-    new DropdownItemModel({id: 1, name: ""})
-])
+const timezonesList = reactive(new Array<DropdownItemModel>())
 
-const timezone = ref(null)
+const currentTimezone = ref(null)
 
-const setTimezone = (data: string) => {
-    timezone.value = data
+const initTimezoneList = () => {
+    for (let tz of timezones) {
+        timezonesList.push(
+            new DropdownItemModel({
+                id: tz.id,
+                name: tz.timezone
+            })
+        )
+    }
 }
+
+initTimezoneList()
+
 </script>
 
 <style lang="scss" scoped>
