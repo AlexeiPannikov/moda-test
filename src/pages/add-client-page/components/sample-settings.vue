@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import AddClientComponentTemplate from './add-client-component-template.vue';
 import UiSwitch from '@/components/ui-switch/ui-switch.vue';
-import InputWithLabel from '../../../components/input-with-lable.vue/input-with-label.vue';
+import InputWithLabel from '@components/input-with-label/input-with-label.vue';
 import UiCheckbox from '@/components/ui-checkbox/ui-checkbox.vue';
 import { reactive } from 'vue';
 

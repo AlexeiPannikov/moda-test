@@ -1,9 +1,10 @@
+import { reactive, shallowRef } from 'vue'
 import { OverviewItemModel } from './OverviewItemModel'
 import { OverviewModel } from './OverviewModel'
 import OverviewItem from './overview-item.vue'
 import CheckedIn from './checked-in.vue'
 import StyleGuide from './style-guide.vue'
-import { reactive, shallowRef } from 'vue'
+import CurrentStep from './current-step.vue'
 
 const overviewList = new OverviewModel({
     task: [
@@ -18,6 +19,9 @@ const overviewList = new OverviewModel({
     ],
     sample: [
         new OverviewItemModel({ id: 1, label: 'Checked In', isVisible: true, component: shallowRef(CheckedIn) }),
+    ],
+    step: [
+        new OverviewItemModel({ id: 6, label: 'Current Step', isVisible: true, component: shallowRef(CurrentStep) }),
     ],
 })
 

@@ -11,13 +11,12 @@
             :class="{ 'active-list': isOpenList, 'dropdown-dirty': currentItemName, 'active-input': isOpenList }">
 
         </div>
-        <div class="dropdown-list" ref="list" :style="{ height: maxHeight, zIndex: isOpenList ? 2000 : -2000 }">
-            <scroll-box-2>
-                <div class="dropdown-item" @click="selectItem(item.id)" v-for="item in props.items" :key="item.id">
-                    <span>{{
-                            item.name
-                    }}</span></div>
-            </scroll-box-2>
+        <div class="dropdown-list" ref="list" :style="{ maxHeight: maxHeight }">
+            <div class="dropdown-item" @click="selectItem(item.id)" v-for="item in props.items" :key="item.id">
+                <span>{{
+                        item.name
+                }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -58,6 +57,10 @@ const currentItemName = computed(() => {
     return props.items.find(item => item.id === props.modelValue)?.name || ""
 })
 
+const visibility = computed(() => {
+    return isOpenList.value ? 'visible' : 'hidden'
+})
+
 onMounted(() => {
     setMaxHeight()
 })
@@ -65,7 +68,6 @@ onMounted(() => {
 const setMaxHeight = () => {
     maxHeight.value = props.maxHeight
     if (!maxHeight.value) {
-        console.log(list.value.getBoundingClientRect());
         maxHeight.value = `${window.innerHeight - list.value.getBoundingClientRect().top - 10}px`
     }
 }
@@ -151,6 +153,7 @@ const selectItem = (id: number) => {
         border-bottom-right-radius: 4px;
         position: absolute;
         top: 46px;
+        visibility: v-bind(visibility);
         width: 100%;
         background-color: white;
         border-top: 0;
@@ -160,6 +163,8 @@ const selectItem = (id: number) => {
         border-style: solid;
         border-color: rgb(var(--v-theme-primary));
         padding: 0 16px 10px 16px;
+        z-index: 100;
+        overflow-y: auto;
 
         .dropdown-item {
             border-top: 1px solid rgba(0, 0, 0, 0.3);
@@ -171,7 +176,6 @@ const selectItem = (id: number) => {
             span {
                 color: rgb(var(--v-text-primary));
                 font-weight: 500;
-                transition: all 0.15s linear;
             }
 
             &:hover {

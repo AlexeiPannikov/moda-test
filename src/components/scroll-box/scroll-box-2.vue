@@ -1,35 +1,37 @@
 <template>
     <div class="scroll-box-wrap">
-        <div class="scroll-box" ref="scrollBox" :style="{ overflowY: props.isScrollOff ? 'unset' : 'scroll' }">
+        <div class="scroll-box" ref="scrollBox" :style="{ overflowY: props.isScrollOff ? 'visible' : 'auto', overflowX: 'visible' }">
             <slot />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { Ref, ref } from '@vue/reactivity';
+import { computed, Ref, ref } from '@vue/reactivity';
 import { onMounted, onUnmounted, onUpdated, watch } from 'vue';
 
 interface IProps {
     maxHeight?: string,
     isScrollOff?: boolean,
+    isScrollLeft?: boolean
 }
 
 const props = withDefaults(defineProps<IProps>(), {
     maxHeight: "",
-    isScrollOff: false
+    isScrollOff: false,
+    isScrollLeft: false
 })
 
 const scrollBox = <Ref<HTMLElement>>ref(null)
 
-const scrollBarWidth = ref('0')
+const scrollThumbBack = ref('rgba(123, 123, 123, 1)')
 
 const toggleVisibleScroll = (event: any) => {
     if (scrollBox.value.contains(event.target)) {
-        scrollBarWidth.value = '6px';
+        scrollThumbBack.value = 'rgba(123, 123, 123, 1)';
     }
     else {
-        scrollBarWidth.value = '0'
+        scrollThumbBack.value = 'rgba(123, 123, 123, 0)'
     }
 }
 
@@ -43,12 +45,16 @@ const setMaxHeight = () => {
     scrollBox.value.style.maxHeight = `${maxHeight}px`
 }
 
+const getScale = computed(() => {
+    return props.isScrollLeft ? -1 : 1
+})
+
 onMounted(() => {
     setTimeout(() => {
         setMaxHeight()
     }, 100)
     addEventListener('resize', setMaxHeight)
-    addEventListener('mousemove', toggleVisibleScroll)
+    // addEventListener('mousemove', toggleVisibleScroll)
 })
 
 onUpdated(() => {
@@ -61,7 +67,7 @@ watch(scrollBox, () => {
 
 onUnmounted(() => {
     removeEventListener('resize', setMaxHeight)
-    removeEventListener('mousemove', toggleVisibleScroll)
+    // removeEventListener('mousemove', toggleVisibleScroll)
 })
 </script>
 
@@ -70,9 +76,15 @@ onUnmounted(() => {
     height: 100%;
     flex-grow: 1;
 
+
     .scroll-box {
-        overflow-y: overlay;
-        overflow-x: overlay;
+        overflow-y: auto;
+        overflow-x: visible;
+        transform: scaleX(v-bind(getScale));
+
+        &:deep()>* {
+            transform: scaleX(v-bind(getScale));
+        }
 
         &::-webkit-scrollbar-track {
             background: white;
@@ -80,14 +92,12 @@ onUnmounted(() => {
         }
 
         &::-webkit-scrollbar {
-            background: #7B7B7B;
             border-radius: 4px;
-            width: v-bind(scrollBarWidth);
-            position: absolute;
+            width: 6px;
         }
 
         &::-webkit-scrollbar-thumb {
-            background: #7B7B7B;
+            background: v-bind(scrollThumbBack);
             border-radius: 4px;
         }
     }

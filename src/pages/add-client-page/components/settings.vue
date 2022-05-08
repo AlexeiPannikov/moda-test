@@ -38,7 +38,7 @@
 import AddClientComponentTemplate from './add-client-component-template.vue';
 import UiTextInput from '@components/ui-text-input/ui-text-input.vue';
 import UiSwitch from '@/components/ui-switch/ui-switch.vue';
-import InputWithLabel from '../../../components/input-with-lable.vue/input-with-label.vue';
+import InputWithLabel from '@components/input-with-label/input-with-label.vue';
 import UiDropdown from '@/components/ui-dropdown/ui-dropdown.vue';
 import { reactive, ref } from 'vue';
 import { DropdownItemModel } from '@/components/ui-dropdown/DropdownItemModel';

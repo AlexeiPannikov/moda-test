@@ -8,14 +8,14 @@
 
     <!-- TABLE  BODY  -->
     <div class="table-body-wrap">
-      <scroll-box :is-scroll-off="!props.isScrollOn" :max-height="props.scrollHeight">
+      <scroll-box-2 :is-scroll-off="!props.isScrollOn" :max-height="props.scrollHeight" :is-scroll-left="isScrollLeft">
         <transition-group name="list" mode="in-out">
           <div class="body-row" :style="props.tableStyles.rowStyles" :class="{ active: row.isActive }"
             @click="clickRowHandler(row)" v-for="row in props.tableModel.bodyRows" :key="row.item.id">
             <slot name="item" :item="row.item" />
           </div>
         </transition-group>
-      </scroll-box>
+      </scroll-box-2>
     </div>
   </div>
 </template>
@@ -31,20 +31,22 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import ScrollBox from "@components/scroll-box/scroll-box.vue";
+import ScrollBox2 from "@components/scroll-box/scroll-box-2.vue";
 
 interface Props {
   tableModel: TableModel;
   tableStyles: TableStylesModel;
   scrollHeight?: string,
   isScrollOn?: boolean,
+  isScrollLeft?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   tableModel: () => new TableModel(),
   tableStyles: () => new TableStylesModel(),
   scrollHeight: "100%",
-  isScrollOn: false
+  isScrollOn: false,
+  isScrollLeft: false
 });
 
 const emit = defineEmits<{

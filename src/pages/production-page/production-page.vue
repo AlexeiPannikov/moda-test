@@ -17,7 +17,7 @@
 
             <v-col class="d-flex justify-end align-end">
                 <div class="filter-tools d-flex">
-                    <div class="filter d-flex align-center mr-3" style="cursor: pointer">
+                    <div class="filter d-flex align-center mr-5" style="cursor: pointer">
                         <img class="mr-2" :src="FilterIcon">
                         Filter
                     </div>
@@ -33,7 +33,7 @@
             <v-col class="mr-5 h-100">
                 <v-card class="h-100">
                     <ui-table :is-scroll-on="true" :scroll-height="null" :table-model="table"
-                        :table-styles="tableStyles" @on-row-click="rowClickHandler">
+                        :table-styles="tableStyles" :is-scroll-left="true" @on-row-click="rowClickHandler">
                         <template #header>
                             <table-header-item :styles="tableHeaderItemStyles">Client</table-header-item>
                             <table-header-item :styles="tableHeaderItemStyles">Job Code</table-header-item>

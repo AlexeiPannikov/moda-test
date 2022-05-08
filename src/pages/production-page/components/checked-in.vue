@@ -1,5 +1,5 @@
 <template>
-    <div class="overview-item checked-in" v-if="props.item.isVisible">
+    <div class="overview-item checked-in">
         CHECKED IN
     </div>
 </template>

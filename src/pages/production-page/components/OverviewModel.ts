@@ -8,6 +8,7 @@ export class OverviewModel {
     assets: OverviewItemModel[] = new Array<OverviewItemModel>()
     team: OverviewItemModel[] = new Array<OverviewItemModel>()
     sample: OverviewItemModel[] = new Array<OverviewItemModel>()
+    step: OverviewItemModel[] = new Array<OverviewItemModel>()
 
     get fullList(): OverviewItemModel[] {
         let fullList = new Array<OverviewItemModel>();
@@ -17,6 +18,7 @@ export class OverviewModel {
         fullList.push(...this.task)
         fullList.push(...this.assets)
         fullList.push(...this.team)
+        fullList.push(...this.step)
         fullList = fullList.sort((a, b) => a.positionNumber - b.positionNumber)
         return fullList
     }

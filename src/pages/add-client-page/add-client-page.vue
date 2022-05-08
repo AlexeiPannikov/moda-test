@@ -1,7 +1,7 @@
 <template>
     <settings-page-template>
         <template #title>
-            <v-btn icon="mdi-arrow-left" style="background: transparent" flat></v-btn> Clients
+            <v-btn @click="goBack" icon="mdi-arrow-left" style="background: transparent" flat></v-btn> Clients
         </template>
 
         <template #menu>
@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { computed, shallowRef } from '@vue/reactivity';
 import { reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import SettingsListItem from '@pages/components/settings-list-item.vue';
 import ScrollBox2 from '@components/scroll-box/scroll-box-2.vue';
 import SettingsPageTemplate from '@pages/components/settings-page-template.vue';
@@ -29,6 +29,7 @@ import SampleSettings from './components/sample-settings.vue'
 import DeliveryOptions from './components/delivery-options/delivery-options.vue';
 
 const route = useRoute()
+const router = useRouter()
 
 const menuList = reactive([
     { name: "SETTINGS", pathParams: "settings", component: shallowRef(Settings) },
@@ -42,6 +43,10 @@ const menuList = reactive([
 const component = computed(() => {
     return menuList.find(item => item.pathParams === route.params.item).component
 })
+
+const goBack = () => {
+    router.go(-1)
+}
 
 </script>
 

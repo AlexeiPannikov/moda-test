@@ -6,7 +6,8 @@
         </template>
     </add-client-component-template>
 
-    <add-delivery-modal :is-open="isOpenModal"></add-delivery-modal>
+    <add-delivery-modal :is-open="isOpenModal" @close="isOpenModal = false" @save="save" @cancel="cancel">
+    </add-delivery-modal>
 </template>
 
 <script lang="ts" setup>
@@ -19,6 +20,14 @@ const isOpenModal = ref(false)
 
 const openAddDeliveryModal = () => {
     isOpenModal.value = true
+}
+
+const save = () => {
+    isOpenModal.value = false
+}
+
+const cancel = () => {
+    isOpenModal.value = false
 }
 </script>
 

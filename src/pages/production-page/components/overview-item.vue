@@ -1,5 +1,5 @@
 <template>
-    <div class="overview-item" v-if="props.item.isVisible">
+    <div class="overview-item">
         <div class="label">{{ props.item.label }}</div>
         <div class="value">
             {{ props.item.value }}

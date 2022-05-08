@@ -1,12 +1,14 @@
 <template>
-    <teleport to='body'>
-        <Transition name='fade'>
+    <teleport to='.v-application'>
+        <transition name='fade'>
             <div v-if="props.isOpen" class="ui-modal-window-wrap">
-                <div class="ui-modal-window px-4 py-4" :style="props.styles">
+                <div class="ui-modal-window px-8 py-8" v-click-outside="close" :style="props.styles">
+                    <slot name="header"></slot>
                     <slot></slot>
+                    <slot name="footer"></slot>
                 </div>
             </div>
-        </Transition>
+        </transition>
     </teleport>
 </template>
 
@@ -17,8 +19,19 @@ interface IProps {
 }
 const props = withDefaults(defineProps<IProps>(), {
     isOpen: false,
-    styles: () => { return {}}
+    styles: () => { return {} }
 })
+
+const emit = defineEmits(['close'])
+
+let isFirstLoading = false;
+
+const close = () => {
+    if (isFirstLoading) {
+        emit('close')
+    }
+    isFirstLoading = true
+}
 </script>
 
 <style lang="scss" scoped>

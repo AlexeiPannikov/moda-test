@@ -3,8 +3,8 @@
         <div class="logo">
             Logo
         </div>
-        <v-tabs class="tabs w-100" color="text-primary" slider-color="primary" alignWithTitle showArrows optional>
-            <v-tab :to="{ name: 'production', params: {type: 'in-progress'} }">
+        <v-tabs class="tabs w-100" color="text-primary" slider-color="primary" alignWithTitle show-arrows :optional="true">
+            <v-tab :to="{ name: 'production', params: { type: 'in-progress' } }">
                 PRODUCTION
             </v-tab>
             <v-tab :to="{ name: 'jobs' }">
@@ -71,7 +71,7 @@
                 <v-list-item class="list-item pl-9">
                     <v-list-item-title style="font-size: 13px;">MY SETTINGS</v-list-item-title>
                 </v-list-item>
-                <v-list-item class="list-item pl-9" :to="{ name: 'studio', params: {item: 'general'} }">
+                <v-list-item class="list-item pl-9" :to="{ name: 'studio', params: { item: 'general' } }">
                     <v-list-item-title style="font-size: 13px;">STUDIO SETTINGS</v-list-item-title>
                 </v-list-item>
                 <v-list-item class="list-item pl-9">
