@@ -27,6 +27,7 @@ import SettingsPageTemplate from '@pages/components/settings-page-template.vue';
 import Settings from './components/settings.vue'
 import SampleSettings from './components/sample-settings.vue'
 import DeliveryOptions from './components/delivery-options/delivery-options.vue';
+import MetadataNamespace from './components/metadata-namespace/metadata-namespace.vue';
 
 const route = useRoute()
 const router = useRouter()
@@ -35,7 +36,7 @@ const menuList = reactive([
     { name: "SETTINGS", pathParams: "settings", component: shallowRef(Settings) },
     { name: "SAMPLE SETTINGS", pathParams: "sample", component: shallowRef(SampleSettings) },
     { name: "DELIVERY OPTIONS", pathParams: "delivery", component: shallowRef(DeliveryOptions) },
-    { name: "METADATA NAMESPACE", pathParams: "namespace" },
+    { name: "METADATA NAMESPACE", pathParams: "namespace", component: shallowRef(MetadataNamespace) },
     { name: "DATA SOURCE", pathParams: "source" },
     { name: "REFERENCE IMAGE ALERTS", pathParams: "alerts" },
 ])

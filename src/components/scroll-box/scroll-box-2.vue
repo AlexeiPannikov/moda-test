@@ -1,6 +1,7 @@
 <template>
     <div class="scroll-box-wrap">
-        <div class="scroll-box" ref="scrollBox" :style="{ overflowY: props.isScrollOff ? 'visible' : 'auto', overflowX: 'visible' }">
+        <div class="scroll-box" ref="scrollBox"
+            :style="{ overflowY: props.isScrollOff ? 'visible' : 'auto', overflowX: 'visible' }">
             <slot />
         </div>
     </div>
@@ -11,29 +12,41 @@ import { computed, Ref, ref } from '@vue/reactivity';
 import { onMounted, onUnmounted, onUpdated, watch } from 'vue';
 
 interface IProps {
+    colorThumb?: string,
+    colorTrack?: string,
     maxHeight?: string,
     isScrollOff?: boolean,
-    isScrollLeft?: boolean
+    isScrollLeft?: boolean,
+    hideScroll?: boolean
 }
 
 const props = withDefaults(defineProps<IProps>(), {
+    colorThumb: 'rgba(123, 123, 123, 1)',
+    colorTrack: 'white',
     maxHeight: "",
     isScrollOff: false,
-    isScrollLeft: false
+    isScrollLeft: false,
+    hideScroll: false
 })
 
 const scrollBox = <Ref<HTMLElement>>ref(null)
 
-const scrollThumbBack = ref('rgba(123, 123, 123, 1)')
+const scrollThumbBack = computed(() => {
+    if (props.hideScroll) {
+        let colorNumbersArr = props.colorThumb.match(/\d+/g);
+        colorNumbersArr.splice(3, 1, '0')
+        console.log(`rgba(${colorNumbersArr.join(', ')})`);
+        return `rgba(${colorNumbersArr.join(', ')})`
+    }
+    return props.colorThumb
+})
 
-const toggleVisibleScroll = (event: any) => {
-    if (scrollBox.value.contains(event.target)) {
-        scrollThumbBack.value = 'rgba(123, 123, 123, 1)';
+const scrollTrackBack = computed(() => {
+    if (props.hideScroll) {
+        return 'transparent'
     }
-    else {
-        scrollThumbBack.value = 'rgba(123, 123, 123, 0)'
-    }
-}
+    return props.colorTrack
+})
 
 const setMaxHeight = () => {
     scrollBox.value.style.maxHeight = "1px"
@@ -54,7 +67,6 @@ onMounted(() => {
         setMaxHeight()
     }, 100)
     addEventListener('resize', setMaxHeight)
-    // addEventListener('mousemove', toggleVisibleScroll)
 })
 
 onUpdated(() => {
@@ -67,7 +79,6 @@ watch(scrollBox, () => {
 
 onUnmounted(() => {
     removeEventListener('resize', setMaxHeight)
-    // removeEventListener('mousemove', toggleVisibleScroll)
 })
 </script>
 
@@ -75,7 +86,6 @@ onUnmounted(() => {
 .scroll-box-wrap {
     height: 100%;
     flex-grow: 1;
-
 
     .scroll-box {
         overflow-y: auto;
@@ -87,7 +97,7 @@ onUnmounted(() => {
         }
 
         &::-webkit-scrollbar-track {
-            background: white;
+            background: v-bind(scrollTrackBack);
             border-radius: 4px;
         }
 
