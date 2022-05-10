@@ -7,7 +7,7 @@
         <v-spacer></v-spacer>
         <div class="buttons align-self-end">
             <button-blue @click="$emit('save')" class="mr-2">Save</button-blue>
-            <button-white  @click="$emit('cancel')">Cancel</button-white>
+            <button-white @click="$emit('cancel')">Cancel</button-white>
         </div>
     </div>
 </template>

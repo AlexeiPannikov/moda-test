@@ -2,13 +2,16 @@
   <v-app class="h-screen d-flex">
     <header-layout />
     <v-main class="main">
-      <router-view />
+      <router-view>
+      </router-view>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts" setup>
+import { useRoute } from 'vue-router';
 import HeaderLayout from './layouts/header-layout.vue';
+const route = useRoute()
 
 </script>
 
@@ -16,6 +19,19 @@ import HeaderLayout from './layouts/header-layout.vue';
 // div, a {
 //   color: rgb(var(--v-theme-text-primary));
 // }
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s linear;
+}
+
+.fade-enter-to {
+  opacity: 1;
+}
 
 html {
   overflow: hidden;

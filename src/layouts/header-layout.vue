@@ -1,50 +1,42 @@
 <template>
-    <v-app-bar class="header pl-9 pr-3" flat absolute>
+    <v-app-bar class="header pl-9 pr-3 w-100" flat absolute>
         <div class="logo">
             Logo
         </div>
-        <v-tabs class="tabs w-100" color="text-primary" slider-color="primary" alignWithTitle show-arrows :optional="true">
-            <v-tab :to="{ name: 'production', params: { type: 'in-progress' } }">
+        <nav class="d-flex nav-list w-100 ml-7" color="text-primary" slider-color="primary" alignWithTitle show-arrows
+            :optional="true">
+            <nav-item :to="{ name: 'production', params: { type: 'in-progress' } }">
                 PRODUCTION
-            </v-tab>
-            <v-tab :to="{ name: 'jobs' }">
+            </nav-item>
+            <nav-item :to="{ name: 'jobs' }">
                 JOBS
-            </v-tab>
-            <v-tab :to="{ name: 'products' }">
+            </nav-item>
+            <nav-item :to="{ name: 'products' }">
                 PRODUCTS
-            </v-tab>
-            <v-menu transition="slide-y-transition">
-                <template #activator="{ props }">
-                    <v-btn class="button h-100" slider-color="tab-slider-hover" v-bind="props">
-                        TASKS
-                        <v-icon right>
-                            mdi-chevron-down
-                        </v-icon>
-                    </v-btn>
-                </template>
-                <v-list min-width="230">
-                    <v-list-item class="list-item pl-9" v-for="(item, i) in tasks" :key="i"
-                        :to="{ name: item.pathName }">
-                        <v-list-item-title style="font-size: 13px;">{{ item.name }}</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
-            <v-tab :to="{ name: 'samples' }">
+            </nav-item>
+            <nav-item @click="isOpenTask = true" v-click-outside="() => { isOpenTask = false }">
+                TASK <v-icon class="ml-3">mdi-chevron-down</v-icon>
+                <dropdown-box :is-open="isOpenTask">
+                    <nav-sub-item>PHOTOGRAPHY</nav-sub-item>
+                    <nav-sub-item>FINAL SECTION</nav-sub-item>
+                </dropdown-box>
+            </nav-item>
+            <nav-item :to="{ name: 'samples' }">
                 SAMPLES
-            </v-tab>
-            <v-tab :to="{ name: 'assets' }">
+            </nav-item>
+            <nav-item :to="{ name: 'assets' }">
                 ASSETS
-            </v-tab>
-            <v-tab :to="{ name: 'wardrobe' }">
+            </nav-item>
+            <nav-item :to="{ name: 'wardrobe' }">
                 WARDROBE
-            </v-tab>
-            <v-tab :to="{ name: 'insights' }">
+            </nav-item>
+            <nav-item :to="{ name: 'insights' }">
                 INSIGHTS
-            </v-tab>
-            <v-tab :to="{ name: 'labs' }">
+            </nav-item>
+            <nav-item :to="{ name: 'labs' }">
                 LABS
-            </v-tab>
-        </v-tabs>
+            </nav-item>
+        </nav>
 
         <div class="icon-group mr-4">
             <v-btn icon="mdi-keyboard-outline" class="mr-2 text-text-secondary" width="24" height="24" />
@@ -57,46 +49,31 @@
             </v-tooltip>
         </div>
 
-        <v-menu transition="slide-y-transition">
-            <template #activator="{ props }">
-                <v-tab class="button border-left" slider-color="tab-slider-hover" v-bind="props">
-                    <v-avatar class="mr-4" :image="DefaultAvatar"></v-avatar>
-                    PIXELMODA
-                    <v-icon right>
-                        mdi-chevron-down
-                    </v-icon>
-                </v-tab>
-            </template>
-            <v-list>
-                <v-list-item class="list-item pl-9">
-                    <v-list-item-title style="font-size: 13px;">MY SETTINGS</v-list-item-title>
-                </v-list-item>
-                <v-list-item class="list-item pl-9" :to="{ name: 'studio', params: { item: 'general' } }">
-                    <v-list-item-title style="font-size: 13px;">STUDIO SETTINGS</v-list-item-title>
-                </v-list-item>
-                <v-list-item class="list-item pl-9">
-                    <v-list-item-title style="font-size: 13px;">WORKFLOWS</v-list-item-title>
-                </v-list-item>
-                <v-list-item class="list-item pl-9">
-                    <v-list-item-title style="font-size: 13px;">STYLE GUIDES</v-list-item-title>
-                </v-list-item>
-                <v-list-item class="list-item pl-9">
-                    <v-list-item-title style="font-size: 13px;">COMPUTER LOCATION</v-list-item-title>
-                </v-list-item>
-                <v-list-item class="list-item pl-9">
-                    <v-list-item-title style="font-size: 13px;">DEBUG INFO</v-list-item-title>
-                </v-list-item>
-                <v-list-item class="list-item pl-9">
-                    <v-list-item-title style="font-size: 13px;">LOGOUT</v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-menu>
+        <nav-item class="pixelmoda-menu" @click="isOpenMenu = true" v-click-outside="() => { isOpenMenu = false }">
+            <v-avatar :image="DefaultAvatar" class="mr-3"></v-avatar>
+            PIXELMODA <v-icon class="ml-3">mdi-chevron-down</v-icon>
+            <dropdown-box :is-open="isOpenMenu">
+                <nav-sub-item>MY SETTINGS</nav-sub-item>
+                <nav-sub-item :to="{ name: 'studio', params: { item: 'general' } }">STUDIO SETTINGS</nav-sub-item>
+                <nav-sub-item>WORKFLOWS</nav-sub-item>
+                <nav-sub-item>STYLE GUIDES</nav-sub-item>
+                <nav-sub-item>COMPUTER LOCATION</nav-sub-item>
+                <nav-sub-item>DEBUG INFO</nav-sub-item>
+                <nav-sub-item>LOGOUT</nav-sub-item>
+            </dropdown-box>
+        </nav-item>
     </v-app-bar>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import DefaultAvatar from "@assets/images/default-avatar.png"
+import NavItem from './components/nav-item.vue'
+import NavSubItem from './components/nav-sub-item.vue';
+import DropdownBox from '@/components/dropdown-box/dropdown-box.vue';
+
+const isOpenTask = ref(false)
+const isOpenMenu = ref(false)
 
 const tasks = reactive([
     { name: "PHOTOGRAPHY", pathName: 'production' },
@@ -130,28 +107,6 @@ const tasks = reactive([
     opacity: 0 !important;
 }
 
-.v-tab {
-
-    .v-tab__slider {
-        height: 4px;
-    }
-}
-
-.v-tab:hover {
-
-    .v-tab__slider {
-        opacity: 1 !important;
-        background-color: #f2f2f2;
-    }
-}
-
-.v-tab--selected:hover {
-
-    .v-tab__slider {
-        background-color: rgb(var(--v-theme-primary)) !important;
-    }
-}
-
 .button {
     position: relative !important;
     border-radius: 0 !important;
@@ -173,6 +128,12 @@ const tasks = reactive([
         background-color: #f2f2f2;
     }
 }
+
+.nav-list,
+.pixelmoda-menu {
+    height: calc(100% + 32px) !important;
+}
+
 
 // .list-item {
 //     border-left: 4px solid transparent !important;
@@ -219,5 +180,9 @@ const tasks = reactive([
             background-color: rgb(var(--v-theme-primary));
         }
     }
+}
+
+.v-toolbar {
+    overflow: visible !important;
 }
 </style>

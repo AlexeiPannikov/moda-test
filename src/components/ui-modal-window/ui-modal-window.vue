@@ -2,20 +2,17 @@
     <teleport to='.v-application'>
         <transition name='fade'>
             <div v-if="props.isOpen" class="ui-modal-window-wrap py-5">
-                <scroll-box-2 hide-scroll class="modal-scroll w-100">
-                    <div class="ui-modal-window px-8 py-8" v-click-outside="close" :style="props.styles">
-                        <slot name="header"></slot>
-                        <slot></slot>
-                        <slot name="footer"></slot>
-                    </div>
-                </scroll-box-2>
+                <div class="ui-modal-window px-8 py-8" v-click-outside="close" :style="props.styles">
+                    <slot name="header"></slot>
+                    <slot></slot>
+                    <slot name="footer"></slot>
+                </div>
             </div>
         </transition>
     </teleport>
 </template>
 
 <script lang="ts" setup>
-import ScrollBox2 from '../scroll-box/scroll-box-2.vue';
 interface IProps {
     isOpen: boolean;
     styles?: {}
@@ -65,15 +62,22 @@ const close = () => {
     z-index: 5000;
 
     .modal-scroll {
+        display: flex;
+        align-items: center;
 
         &:deep().scroll-box {
             width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
 
-        .ui-modal-window {
-            background-color: white;
-            margin: 0 auto;
-        }
+
+    }
+
+    .ui-modal-window {
+        background-color: white;
+        margin: 0 auto;
     }
 }
 </style>

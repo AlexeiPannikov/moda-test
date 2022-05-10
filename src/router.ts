@@ -1,3 +1,4 @@
+import { setDocumentTitle } from './functions/setDocumentTitle';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import ErrorPage from "@pages/error-page.vue";
 import Production from "@pages/production-page/production-page.vue";
@@ -91,6 +92,10 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+router.afterEach((to, from) => {
+    setDocumentTitle(to.name as string, ...Object.values(to.params) as any)
 })
 
 export default router

@@ -28,6 +28,8 @@ import Settings from './components/settings.vue'
 import SampleSettings from './components/sample-settings.vue'
 import DeliveryOptions from './components/delivery-options/delivery-options.vue';
 import MetadataNamespace from './components/metadata-namespace/metadata-namespace.vue';
+import DataSources from './components/data-sources/data-sources.vue';
+import ReferenceImageAlerts from './components/reference-image-alerts/reference-image-alerts.vue';
 
 const route = useRoute()
 const router = useRouter()
@@ -37,8 +39,8 @@ const menuList = reactive([
     { name: "SAMPLE SETTINGS", pathParams: "sample", component: shallowRef(SampleSettings) },
     { name: "DELIVERY OPTIONS", pathParams: "delivery", component: shallowRef(DeliveryOptions) },
     { name: "METADATA NAMESPACE", pathParams: "namespace", component: shallowRef(MetadataNamespace) },
-    { name: "DATA SOURCE", pathParams: "source" },
-    { name: "REFERENCE IMAGE ALERTS", pathParams: "alerts" },
+    { name: "DATA SOURCE", pathParams: "source", component: shallowRef(DataSources) },
+    { name: "REFERENCE IMAGE ALERTS", pathParams: "alerts", component: shallowRef(ReferenceImageAlerts) },
 ])
 
 const component = computed(() => {
@@ -46,7 +48,7 @@ const component = computed(() => {
 })
 
 const goBack = () => {
-    router.go(-1)
+    router.push({name: 'studio', params: {item: 'clients'}})
 }
 
 </script>
