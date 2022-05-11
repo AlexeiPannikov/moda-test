@@ -1,4 +1,4 @@
-import { IPWhitelist } from './IpWhitelist';
+import { IPWhitelist } from './IPWhitelist';
 import { PasswordRules } from './PasswordRules';
 import { TwoFactorAuth } from './TwoFactorAuth';
 export class SecuritySettingsModel {
