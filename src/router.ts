@@ -2,8 +2,11 @@ import { setDocumentTitle } from './functions/setDocumentTitle';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import ErrorPage from "@pages/error-page.vue";
 import Production from "@pages/production-page/production-page.vue";
-import StudioSettings from "@pages/settings-pages/studio-settings-page.vue"
-import AddClient from "@/pages/add-client-page/add-client-page.vue"
+import StudioSettings from "@pages/settings-pages/studio-settings-page.vue";
+import AddClient from "@/pages/add-client-page/add-client-page.vue";
+import Clients from "@pages/settings-pages/clients/clients.vue";
+import GeneralSettings from "@pages/settings-pages/general-settings/general-settings.vue";
+import SecuritySettings from "@pages/settings-pages/security-settings/security-settings.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -64,17 +67,39 @@ const routes: RouteRecordRaw[] = [
     /* --------------------- Settings ------------------------ */
     {
         path: "/settings",
-        redirect: { name: "studio-settings" }
+        redirect: '/settings/studio'
     },
     {
         path: "/settings/studio",
+        name: 'studio',
         component: StudioSettings,
         children: [
             {
-                path: "/settings/studio/:item",
-                name: "studio",
-                component: StudioSettings,
+                path: '/settings/studio/general',
+                name: "general",
+                component: GeneralSettings
             },
+            {
+                path: '/settings/studio/security',
+                name: "security",
+                component: SecuritySettings
+            },
+            //   { path: '/settings/studio/developer', name: "developer" },
+            //   { path: '/settings/studio/users', name: "users" },
+            //   { path: '/settings/studio/roles', name: "roles" },
+            //   { path: '/settings/studio/groups', name: "groups" },
+            //   { path: '/settings/studio/locations', name: "locations" },
+            //   { path: '/settings/studio/containers', name: "containers" },
+            //   { path: '/settings/studio/post', name: "post" },
+            {
+                path: "/settings/studio/clients",
+                name: "clients",
+                component: Clients,
+            },
+            //   { path: '/settings/studio/presets', name: "presets" },
+            //   { path: '/settings/studio/vendors', name: "vendors" },
+            //   { path: '/settings/studio/network', name: "network" },
+            //   { path: '/settings/studio/configurations', name: "configurations" },
         ]
     },
     {

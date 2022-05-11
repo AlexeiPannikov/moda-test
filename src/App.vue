@@ -9,9 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from 'vue-router';
 import HeaderLayout from './layouts/header-layout.vue';
-const route = useRoute()
 
 </script>
 

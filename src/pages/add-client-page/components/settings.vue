@@ -27,7 +27,7 @@
             </v-col>
             <v-col cols="4">
                 <input-with-label class="mt-9" label="CLIENT TIMEZONE">
-                    <ui-file-input label="image/png, image/jpeg, image/jpg, image/jpe">JPG, JPE, JPEG and PNG ONLY</ui-file-input>
+                    <ui-file-input button-icon="mdi-upload" accept="image/png, image/jpeg, image/jpg, image/jpe">JPG, JPE, JPEG and PNG ONLY</ui-file-input>
                 </input-with-label>
             </v-col>
         </v-row>

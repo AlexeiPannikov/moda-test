@@ -1,5 +1,5 @@
 <template>
-    <v-btn class="blue-button" :append-icon="appendIcon" :size="props.size" color="primary" flat>
+    <v-btn class="blue-button" :disabled="props.disabled" :append-icon="appendIcon" :size="props.size" color="primary" flat>
         <slot />
     </v-btn>
 </template>
@@ -7,11 +7,13 @@
 <script lang="ts" setup>
 interface IProps {
     size?: string | number,
-    appendIcon?: string
+    appendIcon?: string,
+    disabled?: boolean,
 }
 const props = withDefaults(defineProps<IProps>(), {
     size: "default",
     appendIcon: null,
+    disabled: false
 })
 </script>
 
@@ -25,5 +27,9 @@ const props = withDefaults(defineProps<IProps>(), {
     &:active {
         background-color: rgb(var(--v-theme-primary-darken)) !important;
     }
+}
+
+.v-btn--disabled {
+    opacity: 0.5 !important;
 }
 </style>

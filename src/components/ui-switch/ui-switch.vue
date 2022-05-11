@@ -1,21 +1,31 @@
 <template>
-    <v-switch :label="props.label" color="primary" class="ui-switch" hide-details></v-switch>
+  <v-switch
+    :label="props.label"
+    color="primary"
+    class="ui-switch"
+    hide-details
+    :disabled="props.disabled"
+  ></v-switch>
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
-    label: {
-        type: String,
-        default: ""
-    }
-})
+  label: {
+    type: String,
+    default: "",
+  },
+  disabled: {
+      type: Boolean
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 .ui-switch {
-    &:deep().v-label {
-        color: rgb(var(--v-theme-text-primary));
-        opacity: 1;
-    }
+  &:deep().v-label {
+    color: rgb(var(--v-theme-text-primary));
+    opacity: 1;
+  }
+  --v-input-control-height: 20px !important;
 }
 </style>

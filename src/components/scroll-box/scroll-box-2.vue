@@ -90,6 +90,7 @@ onUnmounted(() => {
     .scroll-box {
         overflow-y: auto;
         overflow-x: visible;
+        min-height: 100%;
         transform: scaleX(v-bind(getScale));
 
         &:deep()>* {

@@ -53,9 +53,9 @@ const emit = defineEmits<{
   (e: "onRowClick", data: any): void;
 }>();
 
+const hoverRowColor = (props.tableStyles.hoverRowStyles as any).backgroundColor
 const activeRowBack = (props.tableStyles.activeRowStyles as any).backgroundColor
 const activeRowColor = (props.tableStyles.activeRowStyles as any).color
-const hoverRowColor = (props.tableStyles.hoverRowStyles as any).backgroundColor
 
 const clickRowHandler = (row: BodyRowModel) => {
   props.tableModel.setActiveRow(row.item.id);
@@ -128,19 +128,19 @@ const clickRowHandler = (row: BodyRowModel) => {
         background-color: v-bind(activeRowBack) !important;
       }
 
-      &::after {
-        content: "";
-        display: block;
-        position: absolute;
-        z-index: 1;
-        background-color: v-bind(activeRowBack);
-        right: -20px;
-        top: 0;
-        height: 103%;
-        width: 20px;
-        clip-path: polygon(0 0, 0% 100%, 65% 50%);
-        transition: background-color 0.15s linear;
-      }
+      // &::after {
+      //   content: "";
+      //   display: block;
+      //   position: absolute;
+      //   z-index: 1;
+      //   background-color: v-bind(activeRowBack);
+      //   right: -20px;
+      //   top: 0;
+      //   height: 103%;
+      //   width: 20px;
+      //   clip-path: polygon(0 0, 0% 100%, 65% 50%);
+      //   transition: background-color 0.15s linear;
+      // }
     }
   }
 }

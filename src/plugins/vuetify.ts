@@ -18,7 +18,8 @@ const myCustomLightTheme: ThemeDefinition = {
     'tab-slider-hover': "#f2f2f2",
     'client-card-back': "#F5F5F5",
     green: '#14CC26',
-    'green-darken': '#34BF41'
+    'green-darken': '#34BF41',
+    warning: '#ff0000'
   }
 }
 
