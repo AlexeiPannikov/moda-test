@@ -7,7 +7,7 @@
     </div>
 
     <!-- TABLE  BODY  -->
-    <div class="table-body-wrap">
+    <div v-if="props.tableModel.bodyRows.length" class="table-body-wrap" :style="props.tableStyles.bodyStyles">
       <scroll-box-2 :is-scroll-off="!props.isScrollOn" :max-height="props.scrollHeight" :is-scroll-left="isScrollLeft">
         <transition-group name="list" mode="in-out">
           <div class="body-row" :style="props.tableStyles.rowStyles" :class="{ active: row.isActive }"

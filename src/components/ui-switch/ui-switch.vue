@@ -26,6 +26,6 @@ const props = defineProps({
     color: rgb(var(--v-theme-text-primary));
     opacity: 1;
   }
-  --v-input-control-height: 20px !important;
+  --v-input-control-height: 30px !important;
 }
 </style>

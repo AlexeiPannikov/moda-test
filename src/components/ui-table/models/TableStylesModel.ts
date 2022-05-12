@@ -4,6 +4,7 @@ export class TableStylesModel {
 
     tableStyle: object = {}
     headerStyles: object = {};
+    bodyStyles: object = {};
     rowStyles: object = {};
     activeRowStyles: object = {};
     hoverRowStyles: object = {};

@@ -40,8 +40,8 @@ const route = useRoute();
 const menuList = reactive([
   { name: "GENERAL SETTINGS", pathName: "general" },
   { name: "SECURITY SETTINGS", pathName: "security" },
-//   { name: "DEVELOPER", pathName: "developer" },
-//   { name: "USERS", pathName: "users" },
+  { name: "DEVELOPER", pathName: "developer" },
+  { name: "USERS", pathName: "users" },
 //   { name: "USER ROLES", pathName: "roles" },
 //   { name: "USER GROUPS", pathName: "groups" },
 //   { name: "LOCATIONS", pathName: "locations" },
@@ -52,12 +52,5 @@ const menuList = reactive([
 //   { name: "PRODUCT VENDORS", pathName: "vendors" },
 //   { name: "NETWORK PRINTERS", pathName: "network" },
 //   { name: "PRINTER CONFIGURATIONS", pathName: "configurations" },
-]);
-
-const component = computed(() => {
-  switch (route.params.item) {
-    case "clients":
-      return Clients;
-  }
-});
+])
 </script>
