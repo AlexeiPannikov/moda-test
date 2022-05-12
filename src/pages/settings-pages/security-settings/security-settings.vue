@@ -12,7 +12,7 @@
       <v-row class="mt-5" no-gutters>
         <v-col cols="4">
           <input-with-label label="STUDIO NAME">
-            <ui-text-input v-model="password"></ui-text-input>
+            <ui-text-input v-model="password" type="password"></ui-text-input>
           </input-with-label>
 
           <button-blue @click="sendPassword" :disabled="!password" class="mt-5"
@@ -44,13 +44,17 @@
             </input-with-label>
             <input-with-label label="ENFORCED" class="switcher-width">
               <ui-switch
-              :disabled="!twoFactorAuth.enabled"
+                :disabled="!twoFactorAuth.enabled"
                 v-model="twoFactorAuth.enforced"
                 :label="twoFactorAuth.enforced ? 'Yes' : 'No'"
               ></ui-switch>
             </input-with-label>
           </div>
-          
+          <save-changes
+            @save="saveAuthSettings"
+            @cancel="resetAuthSettings"
+            v-if="!isAuthMatch"
+          ></save-changes>
         </v-col>
       </v-row>
 
@@ -124,6 +128,11 @@
             class="mt-2"
             label="Restrict character repetition, keyboard patterns, letter or number sequences."
           ></ui-checkbox>
+          <save-changes
+            @save="savePasswordSettings"
+            @cancel="resetPasswordSettings"
+            v-if="!isPassRulesMatch"
+          ></save-changes>
         </v-col>
       </v-row>
 
@@ -142,19 +151,25 @@
             </input-with-label>
             <div class="align-self-end text-warning warning">
               <v-icon color="warning">mdi-alert</v-icon> Your IP is not in the
-              whitelist. <span>Add in now</span>
+              whitelist.
+              <span @click="isOpenAddIPModal = true">Add in now</span>
             </div>
           </div>
-          <button-white class="mt-4">ADD IPS</button-white>
+          <button-white @click="isOpenAddIPModal = true" class="mt-4"
+            >ADD IPS</button-white
+          >
 
           <div class="description text-text-secondary mt-3">
             Add IPs before enabling IP Whitelist.
           </div>
-          <div class="access-log mt-2">IP Access log</div>
+          <div @click="isOpenWhitelistLogModal = true" class="access-log mt-2">IP Access log</div>
         </v-col>
       </v-row>
     </template>
   </scroll-box-2>
+
+  <add-ip-modal :is-open="isOpenAddIPModal" :add-i-p-model="IPWhitelist.addIPData" @add="isOpenAddIPModal = false" @cancel="isOpenAddIPModal = false"></add-ip-modal>
+  <whitelist-ip-log-modal :is-open="isOpenWhitelistLogModal" @close="isOpenWhitelistLogModal = false"></whitelist-ip-log-modal>
 </template>
 
 <script lang="ts" setup>
@@ -165,39 +180,81 @@ import UiTextInput from "@/components/ui-text-input/ui-text-input.vue";
 import { reactive, ref, toRefs } from "@vue/reactivity";
 import UiSwitch from "@/components/ui-switch/ui-switch.vue";
 import UiCheckbox from "@/components/ui-checkbox/ui-checkbox.vue";
-import ButtonWhite from "@/components/buttons/button-white.vue";
 import { SecuritySettingsModel } from "./models/SecuritySettingsModel";
 import { onMounted, watch } from "vue";
-import { objectEquals } from "@/functions/objectEquals";
+import SaveChanges from "./components/save-changes.vue";
+import AddIpModal from "./components/add-ip-modal.vue";
+import WhitelistIpLogModal from "./components/whitelist-ip-log-modal.vue";
 
 const password = ref("");
 const isShowSettings = ref(false);
-
 const settingsModel = reactive(new SecuritySettingsModel());
+let settingsModelCopy = new SecuritySettingsModel();
 
-let settingsModelCopy = reactive(new SecuritySettingsModel());
+const isAuthMatch = ref(true);
+const isPassRulesMatch = ref(true);
 
-const isAuthEqual = ref(true)
-const isPassRulesEqual = ref(true)
-// const isIPWhitelistEqual = ref(true)
+const isOpenAddIPModal = ref(false);
+const isOpenWhitelistLogModal = ref(false);
 
 const { IPWhitelist, passwordRules, twoFactorAuth } = toRefs(settingsModel);
+
+const sendPassword = () => {
+  isShowSettings.value = true;
+};
 
 onMounted(() => {
   settingsModelCopy = JSON.parse(JSON.stringify(settingsModel));
 });
 
+const matchCheck = () => {
+  isAuthMatch.value = !!(
+    twoFactorAuth.value.enabled === settingsModelCopy.twoFactorAuth.enabled &&
+    twoFactorAuth.value.enforced === settingsModelCopy.twoFactorAuth.enforced
+  );
+  isPassRulesMatch.value = !!(
+    passwordRules.value.length.value ===
+      settingsModelCopy.passwordRules.length.value &&
+    passwordRules.value.digits.value ===
+      settingsModelCopy.passwordRules.digits.value &&
+    passwordRules.value.symbols.value ===
+      settingsModelCopy.passwordRules.symbols.value &&
+    passwordRules.value.uppercaseAndLowercase ===
+      settingsModelCopy.passwordRules.uppercaseAndLowercase &&
+    passwordRules.value.restrictRepetition ===
+      settingsModelCopy.passwordRules.restrictRepetition
+  );
+};
+
 watch(
   () => settingsModel,
   () => {
-        
+    matchCheck();
+    settingsModel.twoFactorAuth.resetEnforced();
   },
   { deep: true }
 );
 
+const saveAuthSettings = () => {};
 
-const sendPassword = () => {
-  isShowSettings.value = true;
+const resetAuthSettings = () => {
+  twoFactorAuth.value.enabled = settingsModelCopy.twoFactorAuth.enabled;
+  twoFactorAuth.value.enforced = settingsModelCopy.twoFactorAuth.enforced;
+};
+
+const savePasswordSettings = () => {};
+
+const resetPasswordSettings = () => {
+  passwordRules.value.length.value =
+    settingsModelCopy.passwordRules.length.value;
+  passwordRules.value.digits.value =
+    settingsModelCopy.passwordRules.digits.value;
+  passwordRules.value.symbols.value =
+    settingsModelCopy.passwordRules.symbols.value;
+  passwordRules.value.uppercaseAndLowercase =
+    settingsModelCopy.passwordRules.uppercaseAndLowercase;
+  passwordRules.value.restrictRepetition =
+    settingsModelCopy.passwordRules.restrictRepetition;
 };
 </script>
 

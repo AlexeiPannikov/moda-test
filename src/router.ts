@@ -7,6 +7,10 @@ import AddClient from "@/pages/add-client-page/add-client-page.vue";
 import Clients from "@pages/settings-pages/clients/clients.vue";
 import GeneralSettings from "@pages/settings-pages/general-settings/general-settings.vue";
 import SecuritySettings from "@pages/settings-pages/security-settings/security-settings.vue";
+import Developer from "@pages/settings-pages/developer/developer.vue";
+import Users from "@pages/settings-pages/users/users-page.vue"
+import EditUser from "@pages/settings-pages/users/edit-user/edit-user.vue"
+import UserSettings from "@pages/settings-pages/users/edit-user/settings/user-settings.vue"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -84,8 +88,16 @@ const routes: RouteRecordRaw[] = [
                 name: "security",
                 component: SecuritySettings
             },
-            //   { path: '/settings/studio/developer', name: "developer" },
-            //   { path: '/settings/studio/users', name: "users" },
+            {
+                path: '/settings/studio/developer',
+                name: "developer",
+                component: Developer
+            },
+            {
+                path: '/settings/studio/users',
+                name: "users",
+                component: Users,
+            },
             //   { path: '/settings/studio/roles', name: "roles" },
             //   { path: '/settings/studio/groups', name: "groups" },
             //   { path: '/settings/studio/locations', name: "locations" },
@@ -106,6 +118,18 @@ const routes: RouteRecordRaw[] = [
         path: "/settings/studio/client/add-client/:item",
         name: "add-client",
         component: AddClient,
+    },
+    {
+        path: "/settings/studio/users/edit-user/:id",
+        name: "edit-user",
+        component: EditUser,
+        children: [
+            {
+                path: '/settings/studio/users/edit-user/:id/settings',
+                name: 'user-settings',
+                component: UserSettings
+            }
+        ]
     },
     {
         path: '/:pathMatch(.*)*',

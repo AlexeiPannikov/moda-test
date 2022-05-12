@@ -21,11 +21,7 @@
                         <img class="mr-2" :src="FilterIcon">
                         Filter
                     </div>
-                    <div @click="isOpenSearch = true" v-click-outside="closeSearch"
-                        class="search-input-wrap d-flex align-center" style="cursor: pointer">
-                        <img :src="SearchIcon" />
-                        <input v-model="searchText" :class="{ active: isOpenSearch }" type="text">
-                    </div>
+                    <ui-small-search v-model="searchText"></ui-small-search>
                 </div>
             </v-col>
         </v-row>
@@ -71,7 +67,7 @@
 
                     <div class="card-content-wrap">
                         <scroll-box-2>
-                            <component :is="components[currentTab]" />
+                            <component :is="(components as any)[currentTab]" />
                         </scroll-box-2>
                     </div>
                 </v-card>
@@ -91,8 +87,8 @@ import { onMounted, reactive, ref, shallowRef } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Overview from "./components/overview.vue"
 import FilterIcon from "@assets/icons/filter.svg"
-import SearchIcon from "@assets/icons/search-big.svg"
 import scrollBox2 from "@components/scroll-box/scroll-box-2.vue";
+import UiSmallSearch from '@/components/ui-search/ui-small-search.vue';
 
 
 const router = useRouter()
@@ -446,23 +442,6 @@ const rowClickHandler = (data: any) => {
 .card-content-wrap {
     max-height: 100%;
     flex-grow: 1;
-}
-
-.search-input-wrap {
-    input {
-        border-bottom: 1px solid rgb(var(--v-theme-text-secondary));
-        margin-left: 10px;
-        width: 0;
-        transition: width 0.2s ease-in-out;
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    .active {
-        width: 208px;
-    }
 }
 
 .table-tabs {
