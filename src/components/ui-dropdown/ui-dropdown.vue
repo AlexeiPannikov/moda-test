@@ -11,7 +11,7 @@
             :class="{ 'active-list': isOpenList, 'dropdown-dirty': currentItemName, 'active-input': isOpenList }">
 
         </div>
-        <div class="dropdown-list" ref="list" :style="{ maxHeight: maxHeight }">
+        <div class="dropdown-list" v-show="isOpenList" ref="list" :style="{ maxHeight: maxHeight }">
             <div class="dropdown-item" @click="selectItem(item.id)" v-for="item in props.items" :key="item.id">
                 <span>{{
                         item.name

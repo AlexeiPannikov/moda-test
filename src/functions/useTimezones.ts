@@ -1,37 +1,47 @@
-import moment from "moment";
+import moment from "moment-timezone"
+
 
 type ArrTimezones = { id: number, timezone: string }[]
 
-export const useTimezones = (): ArrTimezones => {
+export const useTimezones = () => {
 
-    const timer: Date = new Date();
-    let timezones: ArrTimezones = [];
+    let timezones = []
 
-    const getTimeZoneTime = (timezone: number) => {
-        return moment(timer).utc().add(timezone, "hours");
-    }
+    const timezonesNames = moment.tz.names()
 
-    const getTimeZoneText = (timezone: number) => {
-        return (
-            moment(getTimeZoneTime(timezone)).utc().format("HH:mm") +
-            " (UTC" +
-            (timezone >= 0 ? "+" : "") +
-            timezone +
-            ")"
-        );
-    }
+    timezones = timezonesNames.map(item => { return { name: item, offset: moment.tz.zone(item).utcOffset(1403465838805) / 60 } }).sort((a, b) => a.offset - b.offset)
 
-    const initTimezones = () => {
-        for (let i = 0, timezone = -12; timezone <= 14; i++, timezone++) {
-            timezones.push(
-                { id: i + 1, timezone: getTimeZoneText(timezone) }
-            );
-        }
-    }
-
-    initTimezones()
+    timezones = timezones.map(item => `UTC(${item.offset}) ${item.name}`)
 
     return timezones
+    // const timer: Date = new Date();
+    // let timezones: ArrTimezones = [];
+
+    // const getTimeZoneTime = (timezone: number) => {
+    //     return moment(timer).utc().add(timezone, "hours");
+    // }
+
+    // const getTimeZoneText = (timezone: number) => {
+    //     return (
+    //         moment(getTimeZoneTime(timezone)).utc().format("HH:mm") +
+    //         " (UTC" +
+    //         (timezone >= 0 ? "+" : "") +
+    //         timezone +
+    //         ")"
+    //     );
+    // }
+
+    // const initTimezones = () => {
+    //     for (let i = 0, timezone = -12; timezone <= 14; i++, timezone++) {
+    //         timezones.push(
+    //             { id: i + 1, timezone: getTimeZoneText(timezone) }
+    //         );
+    //     }
+    // }
+
+    // initTimezones()
+
+    // return timezones
 }
 
 
