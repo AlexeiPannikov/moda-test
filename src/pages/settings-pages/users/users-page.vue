@@ -3,7 +3,7 @@
     <v-row no-gutters class="flex-grow-0">
       <v-col class="d-flex ml-2">
         <ui-small-search class="mr-5"></ui-small-search>
-        <button-blue>ADD</button-blue>
+        <button-blue @click="goToAddUserPage">ADD</button-blue>
       </v-col>
     </v-row>
     <v-row no-gutters class="flex-grow-1">
@@ -26,12 +26,19 @@ import UserItem from "./components/user-item.vue";
 import { UserModel } from "./components/models/UserModel";
 import { reactive } from "vue";
 import DefaultAvatar from "@assets/images/default-avatar.png"
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const users = reactive([
     new UserModel({id: 1, name: "Test Test", role: 'PHOTOGRAPHER', type: "Full-time user", lastLogin: "8 days ago"}),
     new UserModel({id: 2, avatar: DefaultAvatar, name: "Test Test", role: 'PHOTOGRAPHER', type: "Full-time user", lastLogin: "8 days ago"}),
     new UserModel({id: 3, avatar: DefaultAvatar, name: "Test Test", role: 'PHOTOGRAPHER', type: "Full-time user", lastLogin: "8 days ago"}),
 ])
+
+const goToAddUserPage = () => {
+  router.push({ name: "add-user" })
+};
 </script>
 
 <style lang="scss" scoped></style>

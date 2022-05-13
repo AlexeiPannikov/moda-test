@@ -9,8 +9,13 @@ import GeneralSettings from "@pages/settings-pages/general-settings/general-sett
 import SecuritySettings from "@pages/settings-pages/security-settings/security-settings.vue";
 import Developer from "@pages/settings-pages/developer/developer.vue";
 import Users from "@pages/settings-pages/users/users-page.vue"
-import EditUser from "@pages/settings-pages/users/edit-user/edit-user.vue"
-import UserSettings from "@pages/settings-pages/users/edit-user/settings/user-settings.vue"
+import AddUser from "@pages/settings-pages/users/add-user/add-user.vue"
+import UserSettings from "@pages/settings-pages/users/add-user/settings/user-settings.vue"
+import ContactInfo from "@pages/settings-pages/users/add-user/contact-info/contact-info.vue"
+import DateAndTime from "@pages/settings-pages/users/add-user/date-and-time/date-and-time.vue"
+import Skills from "@pages/settings-pages/users/add-user/skills/skills.vue"
+import Properties from "@pages/settings-pages/users/add-user/properties/properties.vue"
+import UserGroups from "@pages/settings-pages/users/add-user/user-groups/user-groups.vue"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -120,15 +125,40 @@ const routes: RouteRecordRaw[] = [
         component: AddClient,
     },
     {
-        path: "/settings/studio/users/edit-user/:id",
-        name: "edit-user",
-        component: EditUser,
+        path: "/settings/studio/users/add-user",
+        name: "add-user",
+        component: AddUser,
         children: [
             {
-                path: '/settings/studio/users/edit-user/:id/settings',
+                path: '/settings/studio/users/add-user/settings',
                 name: 'user-settings',
                 component: UserSettings
-            }
+            },
+            {
+                path: '/settings/studio/users/add-user/contact-info',
+                name: 'contact-info',
+                component: ContactInfo
+            },
+            {
+                path: '/settings/studio/users/add-user/date-and-time',
+                name: 'date-and-time',
+                component: DateAndTime
+            },
+            {
+                path: '/settings/studio/users/add-user/skills',
+                name: 'skills',
+                component: Skills
+            },
+            {
+                path: '/settings/studio/users/add-user/properties',
+                name: 'properties',
+                component: Properties
+            },
+            {
+                path: '/settings/studio/users/add-user/user-groups',
+                name: 'user-groups',
+                component: UserGroups
+            },
         ]
     },
     {

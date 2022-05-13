@@ -20,7 +20,6 @@
     </div>
     <div class="actions">
       <v-icon
-        @click="editUser"
         color="text-secondary"
         size="27"
         class="mr-2 action-icon"
@@ -45,7 +44,6 @@
 <script lang="ts" setup>
 import { computed } from "@vue/reactivity";
 import { toRefs } from "vue";
-import { useRouter } from "vue-router";
 import { UserModel } from "./models/UserModel";
 
 interface IProps {
@@ -56,9 +54,7 @@ const props = withDefaults(defineProps<IProps>(), {
   user: () => new UserModel(),
 });
 
-const { id, avatar, name, role, type, lastLogin } = toRefs(props.user);
-
-const router = useRouter();
+const { avatar, name, role, type, lastLogin } = toRefs(props.user);
 
 const nameFirstLetters = computed(() => {
   return name.value
@@ -66,10 +62,6 @@ const nameFirstLetters = computed(() => {
     .map((item) => item[0])
     .join("");
 });
-
-const editUser = () => {
-  router.push({ name: "edit-user", params: { id: id.value } });
-};
 </script>
 
 <style lang="scss" scoped>

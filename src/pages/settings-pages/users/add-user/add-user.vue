@@ -37,6 +37,11 @@ const router = useRouter()
 
 const menuList = reactive([
   { name: "SETTINGS", pathName: "user-settings" },
+  { name: "CONTACT INFO", pathName: "contact-info" },
+  { name: "DATE AND TIME", pathName: "date-and-time" },
+  { name: "SKILLS", pathName: "skills" },
+  { name: "PROPERTIES", pathName: "properties" },
+  { name: "USER GROUPS", pathName: "user-groups" },
 ])
 
 const goBack = () => {
