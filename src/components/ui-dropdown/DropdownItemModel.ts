@@ -4,6 +4,8 @@ export class DropdownItemModel {
 
     name: string = "";
 
+    value: string | number = null;
+
     isSelected: boolean = false;
 
     constructor(obj?: Partial<DropdownItemModel>) {

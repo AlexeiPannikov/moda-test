@@ -12,7 +12,7 @@
 
         </div>
         <div class="dropdown-list" v-show="isOpenList" ref="list" :style="{ maxHeight: maxHeight }">
-            <div class="dropdown-item" @click="selectItem(item.id)" v-for="item in props.items" :key="item.id">
+            <div class="dropdown-item" @click="selectItem(item.value)" v-for="item in props.items" :key="item.id">
                 <span>{{
                         item.name
                 }}</span>
@@ -29,7 +29,7 @@ import ScrollBox2 from '../scroll-box/scroll-box-2.vue';
 
 interface IProps {
     placeholder?: string,
-    modelValue: number | null,
+    modelValue: number | string,
     items: DropdownItemModel[],
     width?: string,
     maxHeight?: string,
@@ -44,7 +44,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emits = defineEmits<{
-    (e: 'update:modelValue', value: number): void
+    (e: 'update:modelValue', value: number | string): void
 }>()
 
 const maxHeight = ref("")
@@ -81,11 +81,11 @@ const closeList = () => {
     isOpenList.value = false
 }
 
-const selectItem = (id: number) => {
+const selectItem = (value: number | string) => {
     props.items.forEach(item => {
-        item.isSelected = item.id === id
+        item.isSelected = item.value === value
     })
-    emits('update:modelValue', id)
+    emits('update:modelValue', value)
     closeList()
 }
 
