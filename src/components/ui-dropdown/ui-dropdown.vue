@@ -29,7 +29,7 @@ import ScrollBox2 from '../scroll-box/scroll-box-2.vue';
 
 interface IProps {
     placeholder?: string,
-    modelValue: number | string,
+    modelValue: number | string | null,
     items: DropdownItemModel[],
     width?: string,
     maxHeight?: string,
@@ -54,7 +54,7 @@ const list = ref<Ref<HTMLElement>>(null)
 const isOpenList = ref(false)
 
 const currentItemName = computed(() => {
-    return props.items.find(item => item.id === props.modelValue)?.name || ""
+    return props.items.find(item => item.value === props.modelValue)?.name || ""
 })
 
 const visibility = computed(() => {

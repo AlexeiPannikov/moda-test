@@ -78,8 +78,8 @@ const { bust, eyes, gender, hair, height, hip, shoeSize, size, waist } =
   toRefs(propertiesModel);
 
 const genderList = reactive([
-  new DropdownItemModel({ id: 1, name: "Male" }),
-  new DropdownItemModel({ id: 2, name: "Female" }),
+  new DropdownItemModel({ id: 1, name: "Male", value: "Male" }),
+  new DropdownItemModel({ id: 2, name: "Female", value: "Female" }),
 ]);
 </script>
 

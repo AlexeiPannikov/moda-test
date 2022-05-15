@@ -7,7 +7,7 @@
     <input-with-label label="IP ADDRESS TYPE" class="mt-5">
       <ui-dropdown
         :items="IPAddressTypes"
-        v-model="currentIPAddressTypeId"
+        v-model="props.addIPModel.addressType"
       ></ui-dropdown>
     </input-with-label>
     <input-with-label label="IPV4" class="mt-5">
@@ -52,28 +52,30 @@ const props = withDefaults(defineProps<IProps>(), {
 
 const emit = defineEmits(["add", "cancel"]);
 
-const currentIPAddressTypeId = ref(null);
-
 const isCorrectData = computed(() => {
-  return props.addIPModel.name && props.addIPModel.addressType && (inputRules.IP(props.addIPModel.IPv4) === true);
+  return (
+    props.addIPModel.name &&
+    props.addIPModel.addressType &&
+    inputRules.IP(props.addIPModel.IPv4) === true
+  );
 });
 
 const IPAddressTypes = reactive([
-  new DropdownItemModel({ id: 1, name: IPAddressTypesEnum.Single }),
-  new DropdownItemModel({ id: 2, name: IPAddressTypesEnum.CIDR }),
+  new DropdownItemModel({
+    id: 1,
+    name: IPAddressTypesEnum.Single,
+    value: IPAddressTypesEnum.Single,
+  }),
+  new DropdownItemModel({
+    id: 2,
+    name: IPAddressTypesEnum.CIDR,
+    value: IPAddressTypesEnum.CIDR,
+  }),
 ]);
-
-watch(currentIPAddressTypeId, () => {
-  props.addIPModel.addressType = IPAddressTypes.find(
-    (item) => item.id === currentIPAddressTypeId.value
-  )?.name;
-  console.log(props.addIPModel);
-});
 
 const inputRules = reactive({
   IP: (value: any) => {
-    const pattern =
-      /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
+    const pattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
     return pattern.test(value) || "Invalid IP.";
   },
 });
@@ -81,6 +83,6 @@ const inputRules = reactive({
 
 <style lang="scss" scoped>
 .ip-example {
-    font-size: 12px;
+  font-size: 12px;
 }
 </style>

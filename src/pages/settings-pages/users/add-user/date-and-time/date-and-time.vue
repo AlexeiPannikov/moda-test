@@ -55,13 +55,13 @@ const timezoneList = reactive(new Array<DropdownItemModel>());
 const isInviteUser = ref(null);
 
 const dateFormatList = reactive([
-  new DropdownItemModel({ id: 1, name: "DD/MM/YYYY" }),
-  new DropdownItemModel({ id: 2, name: "MM/DD/YYYY" }),
+  new DropdownItemModel({ id: 1, name: "DD/MM/YYYY", value: 'DD/MM/YYYY' }),
+  new DropdownItemModel({ id: 2, name: "MM/DD/YYYY", value: 'MM/DD/YYYY' }),
 ]);
 
 const firstDayList = reactive([
-  new DropdownItemModel({ id: 1, name: "Monday" }),
-  new DropdownItemModel({ id: 2, name: "Sunday" }),
+  new DropdownItemModel({ id: 1, name: "Monday", value: 'Monday' }),
+  new DropdownItemModel({ id: 2, name: "Sunday", value: 'Sunday' }),
 ]);
 
 let timezones = useTimezones();

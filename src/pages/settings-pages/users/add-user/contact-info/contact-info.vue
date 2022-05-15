@@ -3,7 +3,7 @@
     <v-row no-gutters>
       <v-col cols="10">
         <input-with-label class="mt-9" label="ADDRESS">
-          <ui-text-input label="Add address"></ui-text-input>
+          <ui-text-input v-model="address" label="Add address"></ui-text-input>
         </input-with-label>
       </v-col>
     </v-row>
@@ -11,12 +11,12 @@
     <v-row no-gutters>
       <v-col cols="4">
         <input-with-label class="mt-9 w-75" label="ZIP">
-          <ui-text-input label="Add zip code"></ui-text-input>
+          <ui-text-input v-model="zip" label="Add zip code"></ui-text-input>
         </input-with-label>
       </v-col>
       <v-col cols="6">
         <input-with-label class="mt-9" label="CITY">
-          <ui-text-input label="Add city"></ui-text-input>
+          <ui-text-input v-model="city" label="Add city"></ui-text-input>
         </input-with-label>
       </v-col>
     </v-row>
@@ -30,6 +30,7 @@
               v-model="phoneCode"
               v-maska="'+###'"
               class="w-25 mr-5"
+              label="Code"
             ></ui-text-input>
             <ui-text-input
               ref="phoneNumberInput"
@@ -43,7 +44,7 @@
       <v-col cols="5" class="justify-end d-flex">
         <input-with-label class="mt-9 w-75" label="COUNTRY">
           <ui-dropdown
-            v-model="currentCountryId"
+            v-model="country"
             :items="countries"
             placeholder="Select..."
           >
@@ -55,7 +56,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "@vue/reactivity";
+import { reactive, ref, toRefs } from "@vue/reactivity";
 import UserPageTemplate from "../components/user-page-template.vue";
 import InputWithLabel from "@/components/input-with-label/input-with-label.vue";
 import UiFileInput from "@/components/ui-file-input/ui-file-input.vue";
@@ -65,16 +66,15 @@ import { DropdownItemModel } from "@/components/ui-dropdown/DropdownItemModel";
 import ScrollBox2 from "@/components/scroll-box/scroll-box-2.vue";
 import { onMounted, watch } from "vue";
 import { useCountriesStore } from "@/store/CountriesStore";
+import { ContactInfoModel } from "./models/ContactInfoModel";
 
 const store = useCountriesStore();
 
+const contactInfoModel = reactive(new ContactInfoModel());
+const {address, city, country, phone, phoneCode, phoneNumber, zip} = toRefs(contactInfoModel)
 const countries = reactive(new Array<DropdownItemModel>());
-const isInviteUser = ref(false);
-const currentCountryId = ref(null);
-const phoneNumberInput = ref(null);
-const phoneCodeInput = ref(null);
-const phoneCode = ref("");
-const phoneNumber = ref("");
+const phoneNumberInput = ref(null)
+const phoneCodeInput = ref(null)
 
 onMounted(async () => {
   await store.getCountries();
@@ -104,13 +104,13 @@ const userTypeList = reactive([
 ]);
 
 watch(phoneCode, () => {
-  if (phoneCode.value.length === 4) {
+  if (phoneCode.value.toString().length === 4) {
     phoneNumberInput.value.$el.querySelector("input").focus();
   }
 });
 
 watch(phoneNumber, () => {
-  if (phoneNumber.value.length === 0) {
+  if (phoneNumber.value.toString().length === 0) {
     phoneCodeInput.value.$el.querySelector("input").focus();
   }
 })

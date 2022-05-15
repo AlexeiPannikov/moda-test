@@ -10,7 +10,7 @@
             <ui-checkbox v-for="item in sources" :id="item.id" :label="item.label" v-model="item.isChecked">
             </ui-checkbox>
             <input-with-label class="mt-8" label="PRODUCTION TYPE">
-                <ui-dropdown v-model="productionTypeId" :items="productionTypes" placeholder="Select">
+                <ui-dropdown v-model="productionType" :items="productionTypes" placeholder="Select">
                 </ui-dropdown>
             </input-with-label>
         </div>
@@ -39,7 +39,7 @@ const emit = defineEmits<{
     (e: 'save', data: RuleModel): void
 }>()
 
-const productionTypeId = ref(null)
+const productionType = ref(null)
 
 const sources = reactive([
     { id: 1, label: 'Style code', isChecked: false },
@@ -49,21 +49,21 @@ const sources = reactive([
 ])
 
 const productionTypes = reactive([
-    new DropdownItemModel({ id: 1, name: 'Any Production Type' }),
-    new DropdownItemModel({ id: 2, name: 'On Model' }),
-    new DropdownItemModel({ id: 3, name: 'Mannequin' }),
-    new DropdownItemModel({ id: 4, name: 'Flats' }),
-    new DropdownItemModel({ id: 5, name: 'Overhead' }),
-    new DropdownItemModel({ id: 6, name: 'Tabletop' }),
-    new DropdownItemModel({ id: 7, name: 'Pin' }),
-    new DropdownItemModel({ id: 8, name: 'SPB' }),
-    new DropdownItemModel({ id: 9, name: 'Hanger' }),
+    new DropdownItemModel({ id: 1, name: 'Any Production Type', value: 'Any Production Type' }),
+    new DropdownItemModel({ id: 2, name: 'On Model', value: 'On Model' }),
+    new DropdownItemModel({ id: 3, name: 'Mannequin', value: 'Mannequin' }),
+    new DropdownItemModel({ id: 4, name: 'Flats', value: 'Flats' }),
+    new DropdownItemModel({ id: 5, name: 'Overhead', value: 'Overhead' }),
+    new DropdownItemModel({ id: 6, name: 'Tabletop', value: 'Tabletop' }),
+    new DropdownItemModel({ id: 7, name: 'Pin', value: 'Pin' }),
+    new DropdownItemModel({ id: 8, name: 'SPB', value: 'SPB' }),
+    new DropdownItemModel({ id: 9, name: 'Hanger', value: 'Hanger' }),
 ])
 
 const saveAlertRules = () => {   
     emit('save', new RuleModel({
         sources: sources.filter(item => item.isChecked).map(item => { return item.label }),
-        productionType: productionTypes.find(item => item.id === productionTypeId.value)?.name
+        productionType: productionType.value
     }))
 }
 </script>

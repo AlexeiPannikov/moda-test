@@ -51,18 +51,18 @@ const timezonesList = reactive(new Array<DropdownItemModel>())
 
 const currentTimezone = ref(null)
 
-const initTimezoneList = () => {
-    for (let tz of timezones) {
-        timezonesList.push(
-            new DropdownItemModel({
-                id: tz.id,
-                name: tz.timezone
-            })
-        )
-    }
-}
+// const initTimezoneList = () => {
+//     for (let tz of timezones) {
+//         timezonesList.push(
+//             new DropdownItemModel({
+//                 id: tz.id,
+//                 name: tz.timezone
+//             })
+//         )
+//     }
+// }
 
-initTimezoneList()
+// initTimezoneList()
 
 </script>
 
