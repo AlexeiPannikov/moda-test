@@ -1,10 +1,7 @@
 import { UserModel } from './../pages/settings-pages/users/components/models/UserModel';
-import { AddUserModel } from './../pages/settings-pages/users/add-user/models/AddUserModel';
-import CountriesService from '@/api/services/CountriesService'
 import { defineStore } from 'pinia'
 import AuthService from '@/api/services/AuthService';
 import { LoginRequest } from '@/api/models/requests/LoginRequest';
-import Cookies from 'js-cookie';
 import { StateModel } from './models/StateModel';
 
 export const useUserStore = defineStore('user', {

@@ -76,5 +76,13 @@ const props = defineProps({
   &:deep().v-input__details {
       margin-bottom: 0 !important;
   }
+
+  &:deep().v-field__outline__start {
+    border-radius: 4px 0 0 4px;
+  }
+  
+  &:deep().v-field__outline__end {
+    border-radius: 0 4px 4px 0;
+  }
 }
 </style>

@@ -33,6 +33,9 @@ class Service {
             if (res.status === 401) {
                 throw new Error('Authorization Error')
             }
+            if (res.status === 401) {
+                throw new Error('Not Found')
+            }
         } catch (e: any) {
             throw new Error(e.message)
         }
