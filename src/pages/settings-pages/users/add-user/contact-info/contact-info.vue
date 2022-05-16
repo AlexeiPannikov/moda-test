@@ -67,20 +67,28 @@ import ScrollBox2 from "@/components/scroll-box/scroll-box-2.vue";
 import { onMounted, watch } from "vue";
 import { useCountriesStore } from "@/store/CountriesStore";
 import { ContactInfoModel } from "./models/ContactInfoModel";
+import { useAddUserStore } from "@/store/AddUserStore";
 
-const store = useCountriesStore();
-
-const contactInfoModel = reactive(new ContactInfoModel());
-const {address, city, country, phone, phoneCode, phoneNumber, zip} = toRefs(contactInfoModel)
+const countriesStore = useCountriesStore();
+const addUserStore = useAddUserStore();
+const { address, city, country, phone, phoneCode, phoneNumber, zip } = toRefs(
+  addUserStore.addUserModel.contactInfo
+);
+// const contactInfoModel = reactive(new ContactInfoModel());
+// const {address, city, country, phone, phoneCode, phoneNumber, zip} = toRefs(contactInfoModel)
 const countries = reactive(new Array<DropdownItemModel>());
-const phoneNumberInput = ref(null)
-const phoneCodeInput = ref(null)
+const phoneNumberInput = ref(null);
+const phoneCodeInput = ref(null);
 
 onMounted(async () => {
-  await store.getCountries();
-  for (let i in store.countriesNames) {
+  await countriesStore.getCountries();
+  for (let i in countriesStore.countriesNames) {
     countries.push(
-      new DropdownItemModel({ id: Number(i), name: store.countriesNames[i] })
+      new DropdownItemModel({
+        id: Number(i),
+        name: countriesStore.countriesNames[i],
+        value: countriesStore.countriesNames[i],
+      })
     );
   }
 });
@@ -113,7 +121,7 @@ watch(phoneNumber, () => {
   if (phoneNumber.value.toString().length === 0) {
     phoneCodeInput.value.$el.querySelector("input").focus();
   }
-})
+});
 </script>
 
 <style lang="scss" scoped></style>

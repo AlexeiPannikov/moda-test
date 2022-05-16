@@ -7,7 +7,7 @@
     </scroll-box-2>
     <div class="buttons d-flex align-center align-self-end flex-grow-0 mt-4">
       <ui-switch
-        v-model="isInviteUser"
+        v-model="store.addUserModel.isInviteUser"
         class="mr-5"
         label="Invite User"
       ></ui-switch>
@@ -22,10 +22,9 @@ import ButtonBlue from "@components/buttons/button-blue.vue";
 import ButtonWhite from "@components/buttons/button-white.vue";
 import UiSwitch from "@/components/ui-switch/ui-switch.vue";
 import ScrollBox2 from "@/components/scroll-box/scroll-box-2.vue";
-import { ref } from "@vue/reactivity";
-import { watch } from "vue";
+import { useAddUserStore } from "@/store/AddUserStore";
 
-const isInviteUser = ref(false);
+const store = useAddUserStore()
 
 </script>
 

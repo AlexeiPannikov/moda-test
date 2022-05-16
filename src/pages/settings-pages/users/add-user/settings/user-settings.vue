@@ -79,19 +79,19 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from "@vue/reactivity";
+import { reactive, toRefs } from "@vue/reactivity";
 import UserPageTemplate from "../components/user-page-template.vue";
 import InputWithLabel from "@/components/input-with-label/input-with-label.vue";
 import UiFileInput from "@/components/ui-file-input/ui-file-input.vue";
 import UiTextInput from "@/components/ui-text-input/ui-text-input.vue";
 import UiDropdown from "@/components/ui-dropdown/ui-dropdown.vue";
 import { DropdownItemModel } from "@/components/ui-dropdown/DropdownItemModel";
-import ScrollBox2 from "@/components/scroll-box/scroll-box-2.vue";
 import { SettingsModel } from "./models/SettingsModel";
+import { useAddUserStore } from "@/store/AddUserStore";
 
-const settingsModel = reactive(new SettingsModel());
+const store = useAddUserStore()
 const { email, employment, firstName, lastName, photo, role, userType } =
-  toRefs(settingsModel);
+  toRefs(store.addUserModel.settings);
 
 const roleList = reactive([
   new DropdownItemModel({ id: 1, name: "test1", value: "test1" }),

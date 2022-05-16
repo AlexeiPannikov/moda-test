@@ -47,12 +47,11 @@ import UiDropdown from "@/components/ui-dropdown/ui-dropdown.vue";
 import { DropdownItemModel } from "@/components/ui-dropdown/DropdownItemModel";
 import UiCheckbox from "@/components/ui-checkbox/ui-checkbox.vue";
 import { useTimezones } from "@/functions/useTimezones";
-import { DateAndTimeModel } from "./models/DateAndTimeModel";
+import { useAddUserStore } from "@/store/AddUserStore";
 
-const dateAndTimeModel = reactive(new DateAndTimeModel())
-const {timezone, dateFormat, firstDayOfWeek, twentyFourTime} = toRefs(dateAndTimeModel)
+const store = useAddUserStore()
+const {timezone, dateFormat, firstDayOfWeek, twentyFourTime} = toRefs(store.addUserModel.dateAndTime)
 const timezoneList = reactive(new Array<DropdownItemModel>());
-const isInviteUser = ref(null);
 
 const dateFormatList = reactive([
   new DropdownItemModel({ id: 1, name: "DD/MM/YYYY", value: 'DD/MM/YYYY' }),
@@ -68,7 +67,7 @@ let timezones = useTimezones();
 
 const initTimezones = () => {
   timezones.forEach((item, i) => {
-    timezoneList.push(new DropdownItemModel({ id: i, name: item }));
+    timezoneList.push(new DropdownItemModel({ id: i, name: item, value: item }));
   });
 };
 

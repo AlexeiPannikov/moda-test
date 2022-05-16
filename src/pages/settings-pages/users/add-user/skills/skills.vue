@@ -108,9 +108,9 @@ import UserPageTemplate from "../components/user-page-template.vue";
 import InputWithLabel from "@/components/input-with-label/input-with-label.vue";
 import UiCheckbox from "@/components/ui-checkbox/ui-checkbox.vue";
 import { SkillsModel } from "./models/SkillsModel";
+import { useAddUserStore } from "@/store/AddUserStore";
 
-const isInviteUser = ref(false);
-const skillsModel = reactive(new SkillsModel());
+const store = useAddUserStore();
 const {
   copywriting,
   externalPostProduction,
@@ -119,7 +119,7 @@ const {
   stakeholder,
   styling,
   talent,
-} = toRefs(skillsModel);
+} = toRefs(store.addUserModel.skills);
 </script>
 
 <style lang="scss" scoped></style>

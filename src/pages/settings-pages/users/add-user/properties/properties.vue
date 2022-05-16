@@ -66,16 +66,15 @@
 import { reactive, ref, toRefs } from "@vue/reactivity";
 import UserPageTemplate from "../components/user-page-template.vue";
 import InputWithLabel from "@/components/input-with-label/input-with-label.vue";
-import UiFileInput from "@/components/ui-file-input/ui-file-input.vue";
 import UiTextInput from "@/components/ui-text-input/ui-text-input.vue";
 import UiDropdown from "@/components/ui-dropdown/ui-dropdown.vue";
 import { DropdownItemModel } from "@/components/ui-dropdown/DropdownItemModel";
-import { PropertiesModel } from "./models/PropertiesModel";
+import { useAddUserStore } from "@/store/AddUserStore";
 
-const isInviteUser = ref(false);
-const propertiesModel = reactive(new PropertiesModel());
-const { bust, eyes, gender, hair, height, hip, shoeSize, size, waist } =
-  toRefs(propertiesModel);
+const store = useAddUserStore();
+const { bust, eyes, gender, hair, height, hip, shoeSize, size, waist } = toRefs(
+  store.addUserModel.properties
+);
 
 const genderList = reactive([
   new DropdownItemModel({ id: 1, name: "Male", value: "Male" }),
