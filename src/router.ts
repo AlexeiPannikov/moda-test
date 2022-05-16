@@ -1,5 +1,7 @@
 import { setDocumentTitle } from './functions/setDocumentTitle';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import MainLayout from "@layouts/main-layout.vue"
+import LoginPage from "@pages/auth-pages/login-page.vue"
 import ErrorPage from "@pages/error-page.vue";
 import Production from "@pages/production-page/production-page.vue";
 import StudioSettings from "@pages/settings-pages/studio-settings-page.vue";
@@ -16,148 +18,157 @@ import DateAndTime from "@pages/settings-pages/users/add-user/date-and-time/date
 import Skills from "@pages/settings-pages/users/add-user/skills/skills.vue"
 import Properties from "@pages/settings-pages/users/add-user/properties/properties.vue"
 import UserGroups from "@pages/settings-pages/users/add-user/user-groups/user-groups.vue"
+import AuthService from './api/services/AuthService';
 
 const routes: RouteRecordRaw[] = [
     {
+        path: "/login",
+        name: "login",
+        component: LoginPage
+    },
+    {
         path: "/",
         name: "app",
-        redirect: 'production'
-    },
-    {
-        path: "/production",
-        redirect: { name: "production", params: { type: "in-progress" } }
-    },
-    {
-        path: "/production/:type",
-        name: "production",
-        component: Production
-    },
-    {
-        path: "/jobs",
-        name: "jobs",
-        component: Production
-    },
-    {
-        path: "/products",
-        name: "products",
-        component: Production
-    },
-    {
-        path: "/samples",
-        name: "samples",
-        component: Production
-    },
-    {
-        path: "/tasks",
-        name: "tasks",
-        component: Production
-    },
-    {
-        path: "/assets",
-        name: "assets",
-        component: Production
-    },
-    {
-        path: "/wardrobe",
-        name: "wardrobe",
-        component: Production
-    },
-    {
-        path: "/insights",
-        name: "insights",
-        component: Production
-    },
-    {
-        path: "/labs",
-        name: "labs",
-        component: Production
-    },
+        component: MainLayout,
+        redirect: 'production',
+        children: [
+            {
+                path: "/production",
+                redirect: { name: "production", params: { type: "in-progress" } }
+            },
+            {
+                path: "/production/:type",
+                name: "production",
+                component: Production
+            },
+            {
+                path: "/jobs",
+                name: "jobs",
+                component: Production
+            },
+            {
+                path: "/products",
+                name: "products",
+                component: Production
+            },
+            {
+                path: "/samples",
+                name: "samples",
+                component: Production
+            },
+            {
+                path: "/tasks",
+                name: "tasks",
+                component: Production
+            },
+            {
+                path: "/assets",
+                name: "assets",
+                component: Production
+            },
+            {
+                path: "/wardrobe",
+                name: "wardrobe",
+                component: Production
+            },
+            {
+                path: "/insights",
+                name: "insights",
+                component: Production
+            },
+            {
+                path: "/labs",
+                name: "labs",
+                component: Production
+            },
 
-    /* --------------------- Settings ------------------------ */
-    {
-        path: "/settings",
-        redirect: '/settings/studio'
-    },
-    {
-        path: "/settings/studio",
-        name: 'studio',
-        component: StudioSettings,
-        children: [
+            /* --------------------- Settings ------------------------ */
             {
-                path: '/settings/studio/general',
-                name: "general",
-                component: GeneralSettings
+                path: "/settings",
+                redirect: '/settings/studio'
             },
             {
-                path: '/settings/studio/security',
-                name: "security",
-                component: SecuritySettings
+                path: "/settings/studio",
+                name: 'studio',
+                component: StudioSettings,
+                children: [
+                    {
+                        path: '/settings/studio/general',
+                        name: "general",
+                        component: GeneralSettings
+                    },
+                    {
+                        path: '/settings/studio/security',
+                        name: "security",
+                        component: SecuritySettings
+                    },
+                    {
+                        path: '/settings/studio/developer',
+                        name: "developer",
+                        component: Developer
+                    },
+                    {
+                        path: '/settings/studio/users',
+                        name: "users",
+                        component: Users,
+                    },
+                    //   { path: '/settings/studio/roles', name: "roles" },
+                    //   { path: '/settings/studio/groups', name: "groups" },
+                    //   { path: '/settings/studio/locations', name: "locations" },
+                    //   { path: '/settings/studio/containers', name: "containers" },
+                    //   { path: '/settings/studio/post', name: "post" },
+                    {
+                        path: "/settings/studio/clients",
+                        name: "clients",
+                        component: Clients,
+                    },
+                    //   { path: '/settings/studio/presets', name: "presets" },
+                    //   { path: '/settings/studio/vendors', name: "vendors" },
+                    //   { path: '/settings/studio/network', name: "network" },
+                    //   { path: '/settings/studio/configurations', name: "configurations" },
+                ]
             },
             {
-                path: '/settings/studio/developer',
-                name: "developer",
-                component: Developer
+                path: "/settings/studio/client/add-client/:item",
+                name: "add-client",
+                component: AddClient,
             },
             {
-                path: '/settings/studio/users',
-                name: "users",
-                component: Users,
-            },
-            //   { path: '/settings/studio/roles', name: "roles" },
-            //   { path: '/settings/studio/groups', name: "groups" },
-            //   { path: '/settings/studio/locations', name: "locations" },
-            //   { path: '/settings/studio/containers', name: "containers" },
-            //   { path: '/settings/studio/post', name: "post" },
-            {
-                path: "/settings/studio/clients",
-                name: "clients",
-                component: Clients,
-            },
-            //   { path: '/settings/studio/presets', name: "presets" },
-            //   { path: '/settings/studio/vendors', name: "vendors" },
-            //   { path: '/settings/studio/network', name: "network" },
-            //   { path: '/settings/studio/configurations', name: "configurations" },
-        ]
-    },
-    {
-        path: "/settings/studio/client/add-client/:item",
-        name: "add-client",
-        component: AddClient,
-    },
-    {
-        path: "/settings/studio/users/add-user",
-        name: "add-user",
-        component: AddUser,
-        children: [
-            {
-                path: '/settings/studio/users/add-user/settings',
-                name: 'user-settings',
-                component: UserSettings
-            },
-            {
-                path: '/settings/studio/users/add-user/contact-info',
-                name: 'contact-info',
-                component: ContactInfo
-            },
-            {
-                path: '/settings/studio/users/add-user/date-and-time',
-                name: 'date-and-time',
-                component: DateAndTime
-            },
-            {
-                path: '/settings/studio/users/add-user/skills',
-                name: 'skills',
-                component: Skills
-            },
-            {
-                path: '/settings/studio/users/add-user/properties',
-                name: 'properties',
-                component: Properties
-            },
-            {
-                path: '/settings/studio/users/add-user/user-groups',
-                name: 'user-groups',
-                component: UserGroups
+                path: "/settings/studio/users/add-user",
+                name: "add-user",
+                component: AddUser,
+                children: [
+                    {
+                        path: '/settings/studio/users/add-user/settings',
+                        name: 'user-settings',
+                        component: UserSettings
+                    },
+                    {
+                        path: '/settings/studio/users/add-user/contact-info',
+                        name: 'contact-info',
+                        component: ContactInfo
+                    },
+                    {
+                        path: '/settings/studio/users/add-user/date-and-time',
+                        name: 'date-and-time',
+                        component: DateAndTime
+                    },
+                    {
+                        path: '/settings/studio/users/add-user/skills',
+                        name: 'skills',
+                        component: Skills
+                    },
+                    {
+                        path: '/settings/studio/users/add-user/properties',
+                        name: 'properties',
+                        component: Properties
+                    },
+                    {
+                        path: '/settings/studio/users/add-user/user-groups',
+                        name: 'user-groups',
+                        component: UserGroups
+                    },
+                ]
             },
         ]
     },
@@ -171,6 +182,23 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
+})
+
+router.beforeEach(async (to, from, next) => {
+    try {
+        const res = await AuthService.getCurrentUser()
+        if (!res && to.name !== "login") {
+            next({ name: 'login' })
+        } else {
+            next()
+        }
+    } catch {
+        if (to.name === 'login') {
+            next()
+        } else {
+            next({ name: 'login' })
+        }
+    }
 })
 
 router.afterEach((to, from) => {

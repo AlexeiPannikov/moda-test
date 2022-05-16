@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const emit = defineEmits<{
-    (e: 'click', itemName: string): void
+    (e: 'click'): void
 }>()
 
 const router = useRouter()
@@ -28,6 +28,7 @@ const clickHandler = () => {
     if (props.to) {
         router.push(props.to)
     }
+    emit('click')
 }
 </script>
 

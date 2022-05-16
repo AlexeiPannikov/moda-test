@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+import { NotAuthorizedError } from "../models/errors/NotAuthorizedError";
 
 class Service {
     protected url: string = "";
@@ -6,36 +8,34 @@ class Service {
         this.url = url
     }
 
-    async request(resource: string, options: any = {}, customToken: string = null) {
-        console.log(this.url + resource);
+    protected async request(resource: string, options: any = {}) {
         const headers = {
             Accept: 'application/json',
             'Content-Type': 'application/json',
             ...options?.headers
         }
 
-        // const token = AuthStorage.GetAuthToken();
+        const token = Cookies.get('token');
 
-        // if (token) {
-        //     headers.Authorization = `Bearer ${token}`;
-        // }
-
-        if (customToken) {
-            headers.Authorization = `Bearer ${customToken}`;
+        if (token) {
+            headers.Authorization = `bearer ${token}`;
         }
 
-
-        return fetch(this.url + resource, {
-            ...options,
-            headers: headers,
-            // mode: "no-cors",
-        })
-            .then(res => res.json())
-            .then(result => result)
-            .catch(err => ({
-                success: false,
-                error: err
-            }));
+        try {
+            const res = await fetch(this.url + resource, {
+                ...options,
+                headers: headers,
+                // mode: "no-cors",
+            })
+            if (res.ok) {
+                return await res.json()
+            }
+            if (res.status === 401) {
+                throw new Error('Authorization Error')
+            }
+        } catch (e: any) {
+            throw new Error(e.message)
+        }
     }
 }
 
